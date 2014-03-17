@@ -6,7 +6,14 @@ release.
 
 Implemented
 -----------
-Nothing yet.
+
+Primitives
+~~~~~~~~~~
+* Lists
+** +cons+
+** +hd+
+** +tl+
+** +cons?+
 
 Not Yet Implemented
 -------------------
@@ -61,11 +68,6 @@ Primitive Functions of Kl]:
 ** +simple-error+
 ** +trap-error+
 ** +error-to-string+
-* Lists
-** +cons+
-** +hd+
-** +tl+
-** +cons?+
 * Generic Functions
 ** +defun+
 ** +lambda+
