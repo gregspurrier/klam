@@ -15,6 +15,12 @@ Primitives
 ** +tl+
 ** +cons?+
 
+Ruby Interoperation
+~~~~~~~~~~~~~~~~~~~
+* Ruby \<\-> Kl converters
+** Array \<\-> List
+
+
 Not Yet Implemented
 -------------------
 
@@ -104,5 +110,4 @@ Ruby Interoperation
 * Invoking Kl functions from Ruby
 * Invoking Ruby functions from Kl
 * Ruby \<\-> Kl converters
-** Array \<\-> List
 ** Array \<\-> Absvector
