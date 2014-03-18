@@ -9,8 +9,14 @@ Implemented
 
 Language Features
 ~~~~~~~~~~~~~~~~~
-
 * Reader
+* Environment
+* Code Generation
+** Atoms
+*** Booleans
+*** Numbers
+*** Strings
+*** Symbols
 
 Primitives
 ~~~~~~~~~~
@@ -19,6 +25,8 @@ Primitives
 ** +hd+
 ** +tl+
 ** +cons?+
+* Generic Functions
+** +eval-kl+
 
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
@@ -31,16 +39,10 @@ Not Yet Implemented
 
 Language Features
 ~~~~~~~~~~~~~~~~~
-
 * Environment
 ** Global function space
 ** Global variable space
 * Code Generation
-** Atoms
-*** Booleans
-*** Numbers
-*** Strings
-*** Symbols
 ** Special forms (listed among the primitives below)
 ** Function application
 *** Functions from global environment
@@ -83,7 +85,6 @@ Primitive Functions of Kl]:
 ** +lambda+
 ** +let+
 ** +=+
-** +eval-kl+
 ** +freeze+
 ** +type+
 * Vectors

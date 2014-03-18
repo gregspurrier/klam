@@ -1,1 +1,3 @@
 require 'klam'
+
+require 'stringio'
