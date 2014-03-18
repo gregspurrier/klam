@@ -7,6 +7,11 @@ release.
 Implemented
 -----------
 
+Language Features
+~~~~~~~~~~~~~~~~~
+
+* Reader
+
 Primitives
 ~~~~~~~~~~
 * Lists
@@ -27,7 +32,6 @@ Not Yet Implemented
 Language Features
 ~~~~~~~~~~~~~~~~~
 
-* Reader
 * Environment
 ** Global function space
 ** Global variable space
