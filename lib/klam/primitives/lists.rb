@@ -11,7 +11,7 @@ module Klam
       #   1. Its performance is better
       #   2. It can be read directly by the Ruby reader
       EMPTY_LIST = nil
-      CONS_TAG = ":[CONS]"
+      CONS_TAG = :"[CONS]"
 
       def cons(head, tail)
         [head, tail, CONS_TAG]
