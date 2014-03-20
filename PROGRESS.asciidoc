@@ -17,9 +17,14 @@ Language Features
 *** Numbers
 *** Strings
 *** Symbols
+*** Functions from global environment
+**** Currently only when applied to all arguments
 
 Primitives
 ~~~~~~~~~~
+* Assignments
+** +set+
+** +value+
 * Lists
 ** +cons+
 ** +hd+
@@ -73,9 +78,6 @@ Primitive Functions of Kl]:
 ** +string?+
 ** +n\->string+
 ** +string\->n+
-* Assignments
-** +set+
-** +value+
 * Error Handling
 ** +simple-error+
 ** +trap-error+
