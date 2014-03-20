@@ -3,6 +3,7 @@ end
 
 require 'klam/version'
 require 'klam/error'
+require 'klam/template'
 require 'klam/primitives/lists'
 require 'klam/converters/list'
 require 'klam/compiler'
