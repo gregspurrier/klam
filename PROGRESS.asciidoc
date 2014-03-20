@@ -22,6 +22,8 @@ Language Features
 
 Primitives
 ~~~~~~~~~~
+* Boolean Operations
+** +if+ (special form)
 * Assignments
 ** +set+
 ** +value+
@@ -64,9 +66,9 @@ http://www.shenlanguage.org/learn-shen/shendoc.htm#The%20Primitive%20Functions%2
 Primitive Functions of Kl]:
 
 * Boolean Operations
-** +if+
-** +and+
-** +or+
+** +if+ (normal function)
+** +and+ (both special form and normal function)
+** +or+ (both special form and normal function)
 ** +cond+
 * Symbols
 ** +intern+

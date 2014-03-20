@@ -26,13 +26,27 @@ module Klam
       when true, false
         sexp.to_s
       when Array
-        emit_application(sexp)
+        compile_form(sexp)
+      end
+    end
+
+    def compile_form(form)
+      case form[0]
+      when :if
+        emit_if(form)
+      else
+        emit_application(form)
       end
     end
 
     # Bare-bones function application for now.
     def emit_application(form)
-      render_string('__send__($1)', form.map { |exp| compile_sexp(exp) })
+      render_string('__send__($1)', form.map { |sexp| compile_sexp(sexp) })
+    end
+
+    def emit_if(form)
+      args = form[1..3].map { |sexp| compile_sexp(sexp) }
+      render_string('($1 ? $2 : $3)', *args)
     end
 
     def emit_string(str)
