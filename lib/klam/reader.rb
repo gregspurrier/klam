@@ -31,16 +31,16 @@ module Klam
           items = []
           stack.push items
         when Klam::Lexer::CloseParen
-          list = arrayToList(stack.pop)
+          array = stack.pop
           unless stack.empty?
             items = stack.last
-            items << list
+            items << array
           end
         else
           items << token
         end
       end
-      list
+      arrayToList(array)
     end
   end
 end

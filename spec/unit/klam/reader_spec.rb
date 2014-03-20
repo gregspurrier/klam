@@ -25,8 +25,7 @@ describe Klam::Reader do
     it 'supports nested lists' do
       list = reader('(1 (2 (3) ()))').next
       expect(list)
-        .to eq(arrayToList([1,
-                            arrayToList([2, arrayToList([3]), @empty_list])]))
+        .to eq(arrayToList([1, [2, [3], []]]))
     end
 
     it 'raises an error on unterminated lists' do
