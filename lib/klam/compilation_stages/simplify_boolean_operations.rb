@@ -11,6 +11,8 @@ module Klam
           case sexp[0]
           when :and
             simplify_and(sexp)
+          when :cond
+            simplify_cond(sexp)
           when :or
             simplify_or(sexp)
           else
@@ -33,6 +35,23 @@ module Klam
           [:if, expr1, expr2, false]
         else
           sexp.map { |form| simplify_boolean_operations(form) }
+        end
+      end
+
+      def simplify_cond(sexp)
+        # Cond expressions are of the form:
+        #   (cond (Test1 Expr1) ... (TestN ExprN))
+        clauses = sexp[1..-1]
+        simplify_cond_clauses(clauses)
+      end
+
+      def simplify_cond_clauses(clauses)
+        if clauses.empty?
+          # An error is raised if none of the clauses match.
+          [:"simple-error", 'cond failure']
+        else
+          test, expr = clauses[0]
+          [:if, test, expr, simplify_cond_clauses(clauses[1..-1])]
         end
       end
 

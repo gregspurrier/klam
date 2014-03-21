@@ -22,6 +22,56 @@ describe 'Boolean operation primitives', :type => :functional do
     end
   end
 
+  describe '(cond Test1 Expr1 ... TestN ExprN)' do
+    it 'returns the normal form of the Expr for the first true Test' do
+      kl = <<-EOKL
+        (cond
+          ((< 3 3) 1)
+          ((<= 3 3) 2)
+          ((<= 1 1) 3))
+      EOKL
+
+      expect_kl(kl).to eq(2)
+    end
+
+    it 'does not evaluate the other Exprs' do
+      eval_kl('(set expr1-was-evaluated false)')
+      eval_kl('(set expr2-was-evaluated false)')
+      eval_kl('(set expr3-was-evaluated false)')
+
+      kl = <<-EOKL
+        (cond
+          ((< 3 3) (set expr1-was-evaluated true))
+          ((<= 3 3) (set expr2-was-evaluated true))
+          ((<= 1 1) (set expr3-was-evaluated true)))
+      EOKL
+      eval_kl(kl)
+
+      expect_kl('(value expr1-was-evaluated)').to be(false)
+      expect_kl('(value expr2-was-evaluated)').to be(true)
+      expect_kl('(value expr3-was-evaluated)').to be(false)
+    end
+
+    it 'does not evaluate the subsequent tests' do
+      eval_kl('(set test3-was-evaluated false)')
+
+      kl = <<-EOKL
+        (cond
+          ((< 3 3) 1)
+          ((<= 3 3) 2)
+          ((set test3-was-evaluated true) 3))
+      EOKL
+      eval_kl(kl)
+
+      expect_kl('(value test3-was-evaluated)').to be(false)
+    end
+
+    it 'raises an error if none of the tests evaluate to true' do
+      expect_kl('(trap-error (cond (false false)) error-to-string)')
+        .to eq('cond failure')
+    end
+  end
+
   describe '(if Test TrueExpr FalseExpr)' do
     describe 'when Test evaluates to true' do
       it 'returns the value of TrueExpr' do

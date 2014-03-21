@@ -26,6 +26,7 @@ Primitives
 ** +if+ (special form)
 ** +and+ (special form)
 ** +or+ (special form)
+** +cond+ (special form)
 * Assignments
 ** +set+
 ** +value+
@@ -87,7 +88,6 @@ Primitive Functions of Kl]:
 ** +if+ (normal function)
 ** +and+ (normal function)
 ** +or+ (normal function)
-** +cond+
 * Symbols
 ** +intern+
 * Strings
