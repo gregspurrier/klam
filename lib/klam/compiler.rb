@@ -11,6 +11,7 @@ module Klam
     include Klam::CompilationStages::StripTypeDeclarations
     include Klam::CompilationStages::MakeAbstractionsVariadic
     include Klam::CompilationStages::ConvertLexicalVariables
+    include Klam::CompilationStages::ConvertFreezesToLambdas
     include Klam::CompilationStages::SimplifyBooleanOperations
     include Klam::CompilationStages::EmitRuby
 
@@ -24,6 +25,7 @@ module Klam
         :strip_type_declarations,
         :make_abstractions_variadic,
         :convert_lexical_variables,
+        :convert_freezes_to_lambdas,
         :simplify_boolean_operations,
         :emit_ruby
       ]

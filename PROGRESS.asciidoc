@@ -46,6 +46,7 @@ Primitives
 ** +lambda+ (special form)
 ** +let+ (special form)
 ** +eval-kl+
+** +freeze+ (special form)
 ** +type+ (special form)
 * Arithmetic
 ** +++
@@ -105,7 +106,6 @@ Primitive Functions of Kl]:
 ** +string\->n+
 * Generic Functions
 ** +=+
-** +freeze+ (special form)
 * Vectors
 ** +absvector+
 ** +address\->+

@@ -50,6 +50,25 @@ describe 'Generic function primitives', :type => :functional do
     end
   end
 
+  describe '(freeze Expr)' do
+    it 'returns a function' do
+      expect_kl('(freeze (+ 30 7))').to be_kind_of(Proc)
+    end
+
+    it 'does not evaluate Expr' do
+      eval_kl('(set success true)')
+      eval_kl('(freeze (set success false))')
+      expect_kl('(value success)').to be(true)
+    end
+
+    describe 'when thawed' do
+      it 'evaluates the frozen Expr and returns the result' do
+        eval_kl('(defun thaw (Thunk) (Thunk))')
+        expect_kl('(thaw (freeze (+ 30 7)))').to eq(37)
+      end
+    end
+  end
+
   describe '(type Expr Type)' do
     it 'returns the normal form of Expr' do
       expect_kl('(type (+ 1 2) expr)').to eq(3)
