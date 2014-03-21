@@ -11,7 +11,7 @@ module Klam
     end
 
     def ==(other)
-      name == other.name
+      other.kind_of?(Variable) && name == other.name
     end
 
     def hash
