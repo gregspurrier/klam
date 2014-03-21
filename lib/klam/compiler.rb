@@ -9,6 +9,7 @@ module Klam
 
     include Klam::CompilationStages::KlToInternalRepresentation
     include Klam::CompilationStages::ConvertLexicalVariables
+    include Klam::CompilationStages::SimplifyBooleanOperations
     include Klam::CompilationStages::EmitRuby
 
     def initialize
@@ -19,6 +20,7 @@ module Klam
       stages = [
         :kl_to_internal_representation,
         :convert_lexical_variables,
+        :simplify_boolean_operations,
         :emit_ruby
       ]
       apply_stages(stages, kl)

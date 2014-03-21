@@ -24,6 +24,8 @@ Primitives
 ~~~~~~~~~~
 * Boolean Operations
 ** +if+ (special form)
+** +and+ (special form)
+** +or+ (special form)
 * Assignments
 ** +set+
 ** +value+
@@ -79,8 +81,8 @@ Primitive Functions of Kl]:
 
 * Boolean Operations
 ** +if+ (normal function)
-** +and+ (both special form and normal function)
-** +or+ (both special form and normal function)
+** +and+ (normal function)
+** +or+ (normal function)
 ** +cond+
 * Symbols
 ** +intern+
