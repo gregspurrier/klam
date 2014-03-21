@@ -3,6 +3,7 @@ module Klam
     include ::Klam::Primitives::Assignments
     include ::Klam::Primitives::Lists
     include ::Klam::Primitives::GenericFunctions
+    include ::Klam::Primitives::Arithmetic
 
     def initialize
       # The global assignments namespace. Errors are thrown here in the
