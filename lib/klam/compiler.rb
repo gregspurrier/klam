@@ -1,5 +1,3 @@
-require 'klam/compilation_stages'
-
 module Klam
   class Compiler
     # Compiliation is implmented as a series of stages, each defined in
