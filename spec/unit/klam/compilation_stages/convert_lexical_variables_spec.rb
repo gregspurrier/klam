@@ -29,4 +29,17 @@ describe Klam::CompilationStages::ConvertLexicalVariables do
       expect(converted).to eq(expected)
     end
   end
+
+  describe 'with let' do
+    it 'converts var param to a variable' do
+      sexp = [:let, :X, [:+, :X, 1], [:+, :X, 2]]
+      converted = convert_lexical_variables(sexp)
+
+      reset_generator
+      v1 = fresh_variable
+      expected = [:let, v1, [:+, :X, 1], [:+, v1, 2]]
+
+      expect(converted).to eq(expected)
+    end
+  end
 end

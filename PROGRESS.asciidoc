@@ -17,8 +17,8 @@ Language Features
 *** Numbers
 *** Strings
 *** Symbols
-*** Functions from global environment
-**** Currently only when applied to all arguments
+** Functions from global environment
+*** Currently only when applied to all arguments
 
 Primitives
 ~~~~~~~~~~
@@ -41,6 +41,7 @@ Primitives
 ** +error-to-string+
 * Generic Functions
 ** +defun+ (special form)
+** +let+ (special form)
 ** +eval-kl+
 * Arithmetic
 ** +++
@@ -99,11 +100,10 @@ Primitive Functions of Kl]:
 ** +n\->string+
 ** +string\->n+
 * Generic Functions
-** +lambda+
-** +let+
+** +lambda+ (special form)
 ** +=+
-** +freeze+
-** +type+
+** +freeze+ (special form)
+** +type+ (special form)
 * Vectors
 ** +absvector+
 ** +address\->+

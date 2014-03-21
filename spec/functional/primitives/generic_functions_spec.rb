@@ -21,4 +21,14 @@ describe 'Generic function primitives', :type => :functional do
       expect_kl('(foo 37)').to eq(37)
     end
   end
+
+  describe '(let Var ValueExpr BodyExpr)' do
+    it 'evaluates BodyExpr with Var bound to the normal form of ValueExpr' do
+      expect_kl('(let X (+ 1 2) (* X 2))').to eq(6)
+    end
+
+    it 'uses the inner-most binding when Var is shadowed' do
+      expect_kl('(let X 1 (let X 2 X))').to eq(2)
+    end
+  end
 end

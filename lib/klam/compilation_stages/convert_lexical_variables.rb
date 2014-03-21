@@ -30,6 +30,8 @@ module Klam
           case sexp[0]
           when :defun
             convert_lexical_vars_defun(sexp, var_map)
+          when :let
+            convert_lexical_vars_let(sexp, var_map)
           else
             sexp.map { |form| convert_lexical_vars(form, var_map) }
           end
@@ -45,6 +47,15 @@ module Klam
         params = params.map { |p| var_map[p] }
         expr = convert_lexical_vars(expr, var_map)
         [rator, name, params, expr]
+      end
+
+      def convert_lexical_vars_let(sexp, var_map)
+        rator, var_sym, value_expr, expr = sexp
+        extended_var_map = extend_var_map(var_map, [var_sym])
+
+        value_expr = convert_lexical_vars(value_expr, var_map)
+        expr = convert_lexical_vars(expr, extended_var_map)
+        [rator, extended_var_map[var_sym], value_expr, expr]
       end
 
       def extend_var_map(var_map, syms)

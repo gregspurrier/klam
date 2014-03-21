@@ -35,6 +35,8 @@ module Klam
           emit_defun(form)
         when :if
           emit_if(form)
+        when :let
+          emit_let(form)
         when :"trap-error"
           emit_trap_error(form)
         else
@@ -72,6 +74,15 @@ module Klam
         render_string('($1 ? $2 : $3)', *args)
       end
 
+      def emit_let(form)
+        _, var, value_expr, body_expr = form
+
+        var_rb = emit_ruby(var)
+        value_expr_rb = emit_ruby(value_expr)
+        body_expr_rb = emit_ruby(body_expr)
+
+        render_string('($1 = $2; $3)', var_rb, value_expr_rb, body_expr_rb)
+      end
       def emit_string(str)
         "'" + escape_string(str) + "'"
       end
