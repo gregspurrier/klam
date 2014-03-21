@@ -13,6 +13,7 @@ module Klam
     include Klam::CompilationStages::ConvertLexicalVariables
     include Klam::CompilationStages::ConvertFreezesToLambdas
     include Klam::CompilationStages::SimplifyBooleanOperations
+    include Klam::CompilationStages::ConvertSelfTailCallsToLoops
     include Klam::CompilationStages::EmitRuby
 
     def initialize
@@ -27,6 +28,7 @@ module Klam
         :convert_lexical_variables,
         :convert_freezes_to_lambdas,
         :simplify_boolean_operations,
+        :convert_self_tail_calls_to_loops,
         :emit_ruby
       ]
       apply_stages(stages, kl)

@@ -41,6 +41,12 @@ module Klam
           emit_let(form)
         when :"trap-error"
           emit_trap_error(form)
+        when :"[FIX-VARS]"
+          emit_fix_vars(form)
+        when :"[LOOP]"
+          emit_loop(form)
+        when :"[RECUR]"
+          emit_recur(form)
         else
           emit_application(form)
         end
@@ -86,6 +92,15 @@ module Klam
         EOT
       end
 
+      def emit_fix_vars(form)
+        _, params, expr = form
+        params_rb = params.map { |param| emit_ruby(param) }
+        expr_rb = emit_ruby(expr)
+
+        render_string('(::Kernel.lambda { |$1| $2 }).call($1)',
+                      params_rb, expr_rb)
+      end
+
       def emit_if(form)
         args = form[1..3].map { |sexp| emit_ruby(sexp) }
         render_string('($1 ? $2 : $3)', *args)
@@ -108,6 +123,20 @@ module Klam
 
         render_string('($1 = $2; $3)', var_rb, value_expr_rb, body_expr_rb)
       end
+
+      def emit_loop(form)
+        expr_rb = emit_ruby(form[1])
+        render_string('(::Kernel.lambda { $1 }).call', expr_rb)
+      end
+
+      def emit_recur(form)
+        _, params, new_value_exprs = form
+        params_rb = params.map { |param| emit_ruby(param) }
+        new_value_exprs_rb = new_value_exprs.map { |expr| emit_ruby(expr) }
+
+        render_string('(($1 = $2); redo)', params_rb, new_value_exprs_rb)
+      end
+
       def emit_string(str)
         "'" + escape_string(str) + "'"
       end
