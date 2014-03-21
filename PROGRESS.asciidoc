@@ -35,6 +35,17 @@ Primitives
 * Generic Functions
 ** +defun+ (special form)
 ** +eval-kl+
+* Arithmetic
+** +++
+** +-+
+** +*+
+** +/+
+** +>+
+** +<+
+** +>=+
+** +\<=+
+** +number?+
+
 
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
@@ -103,16 +114,6 @@ Primitive Functions of Kl]:
 ** +close+
 * Time
 ** +get-time+
-* Arithmetic
-** +++
-** +-+
-** +*+
-** +/+
-** +>+
-** +<+
-** +>=+
-** +\<=+
-** +number?+
 
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
