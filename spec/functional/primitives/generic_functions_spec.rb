@@ -6,6 +6,12 @@ describe 'Generic function primitives', :type => :functional do
       expect_kl('(defun foo (X) X)').to eq(:foo)
     end
 
+    it 'does not evaluate Expr' do
+      eval_kl('(set success true)')
+      eval_kl('(defun foo (X) (set success false))')
+      expect_kl('(value success)').to be(true)
+    end
+
     it 'installs Name as a global function' do
       eval_kl('(defun foo (X) X)')
       expect_kl('(foo 37)').to eq(37)
@@ -19,6 +25,18 @@ describe 'Generic function primitives', :type => :functional do
     it 'allows parameter names that are not valid Ruby parameter names' do
       eval_kl('(defun foo (A!B?-C) A!B?-C)')
       expect_kl('(foo 37)').to eq(37)
+    end
+  end
+
+  describe '(lambda Var Expr)' do
+    it 'returns a function' do
+      expect_kl('(lambda X X)').to be_kind_of(Proc)
+    end
+
+    it 'does not evaluate Expr' do
+      eval_kl('(set success true)')
+      eval_kl('(lambda X (set success false))')
+      expect_kl('(value success)').to be(true)
     end
   end
 

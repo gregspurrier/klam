@@ -20,6 +20,14 @@ module Klam
       @eigenclass = class << self; self; end
     end
 
+    def __apply(rator, rands)
+      if rator.kind_of?(::Symbol)
+        __send__(rator, *rands)
+      else
+        rator.call(*rands)
+      end
+    end
+
     class << self
       def rename_method(old_name, new_name)
         alias_method(new_name, old_name)

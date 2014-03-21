@@ -30,6 +30,19 @@ describe Klam::CompilationStages::ConvertLexicalVariables do
     end
   end
 
+  describe 'with lambda' do
+    it 'converts formal param symbols to variables' do
+      sexp = [:lambda, [:X, :Y], [:+, :X, :Y]]
+      converted = convert_lexical_variables(sexp)
+
+      reset_generator
+      v1, v2 = fresh_variable, fresh_variable
+      expected = [:lambda, [v1, v2], [:+, v1, v2]]
+
+      expect(converted).to eq(expected)
+    end
+  end
+
   describe 'with let' do
     it 'converts var param to a variable' do
       sexp = [:let, :X, [:+, :X, 1], [:+, :X, 2]]

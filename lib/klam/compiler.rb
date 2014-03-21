@@ -9,6 +9,7 @@ module Klam
 
     include Klam::CompilationStages::KlToInternalRepresentation
     include Klam::CompilationStages::StripTypeDeclarations
+    include Klam::CompilationStages::MakeAbstractionsVariadic
     include Klam::CompilationStages::ConvertLexicalVariables
     include Klam::CompilationStages::SimplifyBooleanOperations
     include Klam::CompilationStages::EmitRuby
@@ -21,6 +22,7 @@ module Klam
       stages = [
         :kl_to_internal_representation,
         :strip_type_declarations,
+        :make_abstractions_variadic,
         :convert_lexical_variables,
         :simplify_boolean_operations,
         :emit_ruby

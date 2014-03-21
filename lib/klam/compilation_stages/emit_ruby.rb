@@ -35,6 +35,8 @@ module Klam
           emit_defun(form)
         when :if
           emit_if(form)
+        when :lambda
+          emit_lambda(form)
         when :let
           emit_let(form)
         when :"trap-error"
@@ -46,7 +48,22 @@ module Klam
 
       # Bare-bones function application for now.
       def emit_application(form)
-        render_string('__send__($1)', form.map { |sexp| emit_ruby(sexp) })
+        rator = form[0]
+        rands = form[1..-1]
+        rator_rb = emit_ruby(rator)
+        rands_rb = rands.map { |rand| emit_ruby(rand) }
+
+        if rator.kind_of?(Symbol)
+          # Symbol literals are assumed to be known functions that are being
+          # applied to their full set of arguments
+          render_string('__send__($1)', [rator_rb] + rands_rb)
+        else
+          # A run-time decision is required to differentiate between the
+          # rator form being something that evaluates to an abstraction
+          # vs. something that evaluates to the name of a known function.
+          # The __apply method does that for us.
+          render_string('__apply($1, [$2])', rator_rb, rands_rb)
+        end
       end
 
       def emit_defun(form)
@@ -72,6 +89,14 @@ module Klam
       def emit_if(form)
         args = form[1..3].map { |sexp| emit_ruby(sexp) }
         render_string('($1 ? $2 : $3)', *args)
+      end
+
+      def emit_lambda(form)
+        _, params, body = form
+        params_rb = params.map { |param| emit_ruby(param) }
+        body_rb = emit_ruby(body)
+
+        render_string('(-> $1 { $2 })', params_rb, body_rb)
       end
 
       def emit_let(form)
