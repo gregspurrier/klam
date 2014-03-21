@@ -31,4 +31,10 @@ describe 'Generic function primitives', :type => :functional do
       expect_kl('(let X 1 (let X 2 X))').to eq(2)
     end
   end
+
+  describe '(type Expr Type)' do
+    it 'returns the normal form of Expr' do
+      expect_kl('(type (+ 1 2) expr)').to eq(3)
+    end
+  end
 end

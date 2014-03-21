@@ -8,6 +8,7 @@ module Klam
     # Klam::Environment instance.
 
     include Klam::CompilationStages::KlToInternalRepresentation
+    include Klam::CompilationStages::StripTypeDeclarations
     include Klam::CompilationStages::ConvertLexicalVariables
     include Klam::CompilationStages::SimplifyBooleanOperations
     include Klam::CompilationStages::EmitRuby
@@ -19,6 +20,7 @@ module Klam
     def compile(kl)
       stages = [
         :kl_to_internal_representation,
+        :strip_type_declarations,
         :convert_lexical_variables,
         :simplify_boolean_operations,
         :emit_ruby
