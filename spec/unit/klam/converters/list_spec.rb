@@ -12,6 +12,10 @@ describe Klam::Converters::List do
       expect(arrayToList([])).to be @empty_list
     end
 
+    it 'handles nested empty lists' do
+      expect(arrayToList([[]])).to eq(cons(@empty_list, @empty_list))
+    end
+
     it 'returns the corresponding list for a non-empty array' do
       expect(arrayToList([1, 2])).to eq(cons(1, cons(2, @empty_list)))
     end
@@ -29,6 +33,10 @@ describe Klam::Converters::List do
   describe '.listToArray' do
     it 'returns an empty array when given the empty list' do
       expect(listToArray(@empty_list)).to eq([])
+    end
+
+    it 'handles nested empty lists' do
+      expect(listToArray(cons(@empty_list, @empty_list))).to eq([[]])
     end
 
     it 'returns the corresponding array for a non-emtpy list' do

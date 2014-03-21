@@ -18,7 +18,7 @@ module Klam
         array = []
         while list != EMPTY_LIST
           item = hd(list)
-          item = listToArray(item) if cons?(item)
+          item = listToArray(item) if cons?(item) || item == EMPTY_LIST
           array << item
           list = tl(list)
         end
