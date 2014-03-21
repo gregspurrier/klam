@@ -33,6 +33,7 @@ Primitives
 ** +tl+
 ** +cons?+
 * Generic Functions
+** +defun+ (special form)
 ** +eval-kl+
 
 Ruby Interoperation
@@ -85,7 +86,6 @@ Primitive Functions of Kl]:
 ** +trap-error+
 ** +error-to-string+
 * Generic Functions
-** +defun+
 ** +lambda+
 ** +let+
 ** +=+

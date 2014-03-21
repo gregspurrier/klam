@@ -10,11 +10,17 @@ module Klam
     # Klam::Environment instance.
 
     include Klam::CompilationStages::KlToInternalRepresentation
+    include Klam::CompilationStages::ConvertLexicalVariables
     include Klam::CompilationStages::EmitRuby
+
+    def initialize
+      @generator = Klam::VariableGenerator.new
+    end
 
     def compile(kl)
       stages = [
         :kl_to_internal_representation,
+        :convert_lexical_variables,
         :emit_ruby
       ]
       apply_stages(stages, kl)
@@ -26,6 +32,13 @@ module Klam
       stages.reduce(kl) do |exp, stage|
         send(stage, exp)
       end
+    end
+
+    # Returns a new Klam::Variable object that is unique within this
+    # instance of the compiler. Variables are never used in a global
+    # context in Kl, so this is sufficient to avoid collisions.
+    def fresh_variable
+      @generator.next
     end
   end
 end
