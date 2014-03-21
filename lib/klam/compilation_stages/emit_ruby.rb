@@ -96,7 +96,7 @@ module Klam
         params_rb = params.map { |param| emit_ruby(param) }
         body_rb = emit_ruby(body)
 
-        render_string('(-> $1 { $2 })', params_rb, body_rb)
+        render_string('(::Kernel.lambda { |$1| $2 })', params_rb, body_rb)
       end
 
       def emit_let(form)
