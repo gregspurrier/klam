@@ -35,6 +35,8 @@ module Klam
           emit_defun(form)
         when :if
           emit_if(form)
+        when :"trap-error"
+          emit_trap_error(form)
         else
           emit_application(form)
         end
@@ -76,6 +78,23 @@ module Klam
 
       def emit_symbol(sym)
         ':"' + sym.to_s + '"'
+      end
+
+      def emit_trap_error(form)
+        _, expr, handler = form
+        err_var = fresh_variable
+
+        expr_rb = emit_ruby(expr)
+        apply_handler_rb = emit_application([handler, err_var])
+        err_var_rb = emit_ruby(err_var)
+
+        render_string(<<-EOT, err_var_rb, expr_rb, apply_handler_rb)
+          begin
+            $2
+          rescue => $1
+            $3
+          end
+        EOT
       end
 
       # Escape single quotes and backslashes

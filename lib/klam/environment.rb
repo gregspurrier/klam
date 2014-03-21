@@ -1,6 +1,7 @@
 module Klam
   class Environment < BasicObject
     include ::Klam::Primitives::Assignments
+    include ::Klam::Primitives::ErrorHandling
     include ::Klam::Primitives::Lists
     include ::Klam::Primitives::GenericFunctions
     include ::Klam::Primitives::Arithmetic
