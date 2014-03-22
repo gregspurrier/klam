@@ -11,17 +11,19 @@ Language Features
 ~~~~~~~~~~~~~~~~~
 * Reader
 * Environment
+** Global assignment namespace
+** Global function namespace
 * Code Generation
 ** Atoms
-*** Booleans
-*** Numbers
-*** Strings
-*** Symbols
-** Function application
-*** Functions from global environment
-**** Currently only when applied to all arguments
-*** Abstractions
-*** Tail call elimination (self-tail-calls only)
+** Abstractions
+** Functions
+** Special forms (see marked primimitives below)
+** Application
+*** Functions and abstractions:
+**** Full application
+**** Partial application
+**** Currying
+** Self tail-call optimization
 
 Primitives
 ~~~~~~~~~~
@@ -60,28 +62,17 @@ Primitives
 ** +\<=+
 ** +number?+
 
-
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
 * Ruby \<\-> Kl converters
 ** Array \<\-> List
-
 
 Not Yet Implemented
 -------------------
 
 Language Features
 ~~~~~~~~~~~~~~~~~
-* Environment
-** Global function space
-** Global variable space
 * Code Generation
-** Special forms (listed among the primitives below)
-** Function application
-*** Functions from global environment
-*** Functions passed as arguments
-*** Partial application
-*** Uncurrying
 *** Inlining of simple primitives
 
 Primitives
