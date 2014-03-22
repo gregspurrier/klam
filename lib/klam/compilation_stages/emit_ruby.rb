@@ -52,7 +52,6 @@ module Klam
         end
       end
 
-      # Bare-bones function application for now.
       def emit_application(form)
         rator = form[0]
         rands = form[1..-1]
@@ -60,8 +59,8 @@ module Klam
         rands_rb = rands.map { |rand| emit_ruby(rand) }
 
         if rator.kind_of?(Symbol)
-          # Symbol literals are assumed to be known functions that are being
-          # applied to their full set of arguments
+          # Assume that the full set of arguments is available. Partial
+          # application of known functions has already been taken care of.
           render_string('__send__($1)', [rator_rb] + rands_rb)
         else
           # A run-time decision is required to differentiate between the

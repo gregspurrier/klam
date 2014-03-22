@@ -2,7 +2,7 @@ module Klam
   module Primitives
     module GenericFunctions
       def eval_kl(form)
-        compiler = Klam::Compiler.new
+        compiler = Klam::Compiler.new(self)
         code = compiler.compile(form)
         instance_eval code
       end

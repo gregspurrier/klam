@@ -13,10 +13,12 @@ module Klam
     include Klam::CompilationStages::ConvertLexicalVariables
     include Klam::CompilationStages::ConvertFreezesToLambdas
     include Klam::CompilationStages::SimplifyBooleanOperations
+    include Klam::CompilationStages::ConvertPartialApplicationsToLambdas
     include Klam::CompilationStages::ConvertSelfTailCallsToLoops
     include Klam::CompilationStages::EmitRuby
 
-    def initialize
+    def initialize(environment)
+      @environment = environment
       @generator = Klam::VariableGenerator.new
     end
 
@@ -28,6 +30,7 @@ module Klam
         :convert_lexical_variables,
         :convert_freezes_to_lambdas,
         :simplify_boolean_operations,
+        :convert_partial_applications_to_lambdas,
         :convert_self_tail_calls_to_loops,
         :emit_ruby
       ]
@@ -40,6 +43,10 @@ module Klam
       stages.reduce(kl) do |exp, stage|
         send(stage, exp)
       end
+    end
+
+    def arity(sym)
+      @environment.__arity(sym)
     end
 
     # Returns a new Klam::Variable object that is unique within this

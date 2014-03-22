@@ -9,6 +9,24 @@ describe 'Application', :type => :functional do
       end
     end
 
+    describe 'when not all arguments are provided' do
+      before(:each) do
+        eval_kl('(defun add3 (A B C) (+ (+ A B) C))')
+      end
+
+      it 'returns a function' do
+        expect_kl('(add3 1)').to be_kind_of(Proc)
+      end
+
+      it 'evaluates once all of the arguments are provided' do
+        expect_kl('((add3 1) 2 3)').to eq(6)
+      end
+
+      it 'allows further partial application' do
+        expect_kl('(((add3 1) 2) 3)').to eq(6)
+      end
+    end
+
     describe 'when the function takes no arguments' do
       it 'returns the result of evaluating the function\'s body' do
         eval_kl('(defun thirty-seven () 37)')
