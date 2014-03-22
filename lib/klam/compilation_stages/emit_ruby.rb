@@ -59,15 +59,13 @@ module Klam
         rands_rb = rands.map { |rand| emit_ruby(rand) }
 
         if rator.kind_of?(Symbol)
-          # Assume that the full set of arguments is available. Partial
-          # application of known functions has already been taken care of.
+          # Application of a function defined in the environment. At this point
+          # partial application and currying has been taken care of, so a
+          # simple send suffices.
           render_string('__send__($1)', [rator_rb] + rands_rb)
         else
-          # A run-time decision is required to differentiate between the
-          # rator form being something that evaluates to an abstraction
-          # vs. something that evaluates to the name of a known function.
-          # The __apply method does that for us.
-          render_string('__apply($1, [$2])', rator_rb, rands_rb)
+          # Application of an abstraction
+          render_string('$1.call($2)', rator_rb, rands_rb)
         end
       end
 
@@ -110,7 +108,7 @@ module Klam
         params_rb = params.map { |param| emit_ruby(param) }
         body_rb = emit_ruby(body)
 
-        render_string('(::Kernel.lambda { |$1| $2 })', params_rb, body_rb)
+        render_string('(::Kernel.lambda { |$1| $2 }).curry', params_rb, body_rb)
       end
 
       def emit_let(form)

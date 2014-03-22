@@ -20,14 +20,6 @@ module Klam
       @eigenclass = class << self; self; end
     end
 
-    def __apply(rator, rands)
-      if rator.kind_of?(::Symbol)
-        __send__(rator, *rands)
-      else
-        rator.curry.call(*rands)
-      end
-    end
-
     def __arity(sym)
       @eigenclass.instance_method(sym).arity
     rescue ::NameError

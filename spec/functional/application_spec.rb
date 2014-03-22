@@ -27,18 +27,22 @@ describe 'Application', :type => :functional do
       end
     end
 
+    describe 'uncurrying' do
+      before(:each) do
+        eval_kl('(defun add3 (A) (lambda B (lambda C (+ (+ A B) C))))')
+      end
+
+      it 'provides the equivalent behavior to defining a polyadic function' do
+        expect_kl('(add3 1 2 3)').to eq(6)
+        expect_kl('((add3 1 2) 3)').to eq(6)
+        expect_kl('((add3 1) 2 3)').to eq(6)
+      end
+    end
+
     describe 'when the function takes no arguments' do
       it 'returns the result of evaluating the function\'s body' do
         eval_kl('(defun thirty-seven () 37)')
         expect_kl('(thirty-seven)').to eq(37)
-      end
-    end
-
-    describe 'when the function is returned from other functions' do
-      it 'applies the returned function to its arguments' do
-        eval_kl('(defun return-add () add)')
-        eval_kl('(defun add (A B) (+ A B))')
-        expect_kl('((return-add) 2 3)').to eq(5)
       end
     end
   end
@@ -47,6 +51,11 @@ describe 'Application', :type => :functional do
     describe 'when applied directly' do
       it 'returns the result of applying the abstraction to its argument' do
         expect_kl('((lambda X (+ X 3)) 2)').to eq(5)
+      end
+
+      it 'uncurries addtional arguments' do
+        expect_kl('((lambda A (lambda B (lambda C (+ (+ A B) C)))) 1 2 3)')
+          .to eq(6)
       end
     end
 
