@@ -15,6 +15,7 @@ module Klam
     include Klam::CompilationStages::SimplifyBooleanOperations
     include Klam::CompilationStages::ConvertPartialApplicationsToLambdas
     include Klam::CompilationStages::CurryAbstractionApplications
+    include Klam::CompilationStages::MakeAbstractionsMonadic
     include Klam::CompilationStages::ConvertSelfTailCallsToLoops
     include Klam::CompilationStages::EmitRuby
 
@@ -33,6 +34,7 @@ module Klam
         :simplify_boolean_operations,
         :convert_partial_applications_to_lambdas,
         :curry_abstraction_applications,
+        :make_abstractions_monadic,
         :convert_self_tail_calls_to_loops,
         :emit_ruby
       ]
