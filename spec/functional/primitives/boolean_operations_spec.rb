@@ -20,6 +20,10 @@ describe 'Boolean operation primitives', :type => :functional do
         expect_kl('(value success)').to be(true)
       end
     end
+
+    it 'is available for partial application' do
+      expect_kl('((and true) true)').to be(true)
+    end
   end
 
   describe '(cond Test1 Expr1 ... TestN ExprN)' do
@@ -96,6 +100,10 @@ describe 'Boolean operation primitives', :type => :functional do
         expect_kl('(value success)').to be(true)
       end
     end
+
+    it 'is available for partial application' do
+      expect_kl('(((if false) 1) 37)').to eq(37)
+    end
   end
 
   describe '(or Expr1 Expr2)' do
@@ -116,6 +124,10 @@ describe 'Boolean operation primitives', :type => :functional do
         expect_kl('(or (> 1 2) (> 3 3))').to be(false)
         expect_kl('(or (> 1 2) (>= 3 3))').to be(true)
       end
+    end
+
+    it 'is available for partial application' do
+      expect_kl('((or false) false)').to be(false)
     end
   end
 end
