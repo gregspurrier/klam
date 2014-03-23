@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'String primitives' do
+describe Klam::Primitives::Strings do
   include Klam::Primitives::Strings
 
   describe '(pos Str N)' do
