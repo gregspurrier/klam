@@ -1,8 +1,18 @@
 require 'spec_helper'
 
 describe 'Tail call optimization', :type => :functional do
-  it 'optimizes self tail calls so that they do not blow up the stack' do
+  it 'optimizes self tail calls in an if true clause' do
     eval_kl('(defun count-down (X) (if (> X 0) (count-down (- X 1)) true))')
+    expect_kl('(count-down 10000)').to be(true)
+  end
+
+  it 'optimizes self tail calls in an if false clause' do
+    eval_kl('(defun count-down (X) (if (<= X 0) true (count-down (- X 1))))')
+    expect_kl('(count-down 10000)').to be(true)
+  end
+
+  it 'optimizes self tail calls in a let body' do
+    eval_kl('(defun count-down (X) (if (<= X 0) true (let F 1 (count-down (- X 1)))))')
     expect_kl('(count-down 10000)').to be(true)
   end
 

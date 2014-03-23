@@ -61,9 +61,9 @@ module Klam
           when :if
             _, _, true_expr, false_expr = body
             contains_self_tail_calls?(true_expr, name) ||
-              contais_self_tail_calls?(false_expr, name)
+              contains_self_tail_calls?(false_expr, name)
           when :let
-            contains_self_tail_calls?(body[3])
+            contains_self_tail_calls?(body[3], name)
           else
             false
           end
