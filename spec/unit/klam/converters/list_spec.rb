@@ -26,7 +26,8 @@ describe Klam::Converters::List do
       array2 = [:a, :b, :c]
       list2 = arrayToList(array2)
 
-      expect(arrayToList([array1, array2])).to eq(cons(list1, cons(list2, nil)))
+      expect(arrayToList([array1, array2]))
+        .to eq(cons(list1, cons(list2, @empty_list)))
     end
   end
 
