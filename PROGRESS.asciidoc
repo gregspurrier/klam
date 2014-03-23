@@ -28,9 +28,9 @@ Language Features
 Primitives
 ~~~~~~~~~~
 * Boolean Operations
-** +if+ (special form)
-** +and+ (special form)
-** +or+ (special form)
+** +if+ (special form and normal function)
+** +and+ (special form and normal function)
+** +or+ (special form and normal function)
 ** +cond+ (special form)
 * Symbols
 ** +intern+
@@ -91,10 +91,6 @@ As defined in
 http://www.shenlanguage.org/learn-shen/shendoc.htm#The%20Primitive%20Functions%20of%20K%20Lambda[The
 Primitive Functions of Kl]:
 
-* Boolean Operations
-** +if+ (normal function)
-** +and+ (normal function)
-** +or+ (normal function)
 * Generic Functions
 ** +=+
 * Vectors
