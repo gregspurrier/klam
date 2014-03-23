@@ -58,6 +58,7 @@ Primitives
 ** +defun+ (special form)
 ** +lambda+ (special form)
 ** +let+ (special form)
+** +=+
 ** +eval-kl+
 ** +freeze+ (special form)
 ** +type+ (special form)
@@ -91,8 +92,6 @@ As defined in
 http://www.shenlanguage.org/learn-shen/shendoc.htm#The%20Primitive%20Functions%20of%20K%20Lambda[The
 Primitive Functions of Kl]:
 
-* Generic Functions
-** +=+
 * Vectors
 ** +absvector+
 ** +address\->+

@@ -1,6 +1,12 @@
 module Klam
   module Primitives
     module GenericFunctions
+      def equal(a, b)
+        a == b
+      end
+      alias_method :"=", :equal
+      remove_method :equal
+
       def eval_kl(form)
         compiler = Klam::Compiler.new(self)
         code = compiler.compile(form)
