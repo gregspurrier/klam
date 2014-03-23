@@ -7,6 +7,7 @@ module Klam
     include ::Klam::Primitives::ErrorHandling
     include ::Klam::Primitives::Lists
     include ::Klam::Primitives::GenericFunctions
+    include ::Klam::Primitives::Streams
     include ::Klam::Primitives::Arithmetic
 
     def initialize
@@ -21,6 +22,9 @@ module Klam
       # compiled code needs to reference it. It is used, e.g., when renaming
       # methods.
       @eigenclass = class << self; self; end
+
+      # The open primitive depends on having *home-directory* assigned.
+      set(:"*home-directory*", ::Dir.pwd)
     end
 
     def __arity(sym)
