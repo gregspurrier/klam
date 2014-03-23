@@ -2,7 +2,14 @@ module Klam
   module Primitives
     module Symbols
       def intern(str)
-        str.intern
+        case str
+        when 'true'
+          true
+        when 'false'
+          false
+        else
+          str.intern
+        end
       end
     end
   end
