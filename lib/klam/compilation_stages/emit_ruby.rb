@@ -84,11 +84,12 @@ module Klam
         # resulting methods are slower than if they had been defined via def.
         # To maximize performance, methods are defined with def and then
         # renamed to their intended name afterwards.
-        render_string(<<-EOT, name_rb, params_rb, body_rb)
-          def __new_global_fn($2)
+        mangled_name = '__klam_fn_' + name.to_s.gsub(/[^a-zA-Z0-9]/, '_')
+        render_string(<<-EOT, name_rb, params_rb, body_rb, mangled_name)
+          def $4($2)
             $3
           end
-          @eigenclass.rename_method(:__new_global_fn, $1)
+          @eigenclass.rename_method(:$4, $1)
           $1
         EOT
       end
