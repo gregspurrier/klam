@@ -32,6 +32,8 @@ Primitives
 ** +and+ (special form)
 ** +or+ (special form)
 ** +cond+ (special form)
+* Symbols
+** +intern+
 * Strings
 ** +pos+
 ** +tlstr+
@@ -93,8 +95,6 @@ Primitive Functions of Kl]:
 ** +if+ (normal function)
 ** +and+ (normal function)
 ** +or+ (normal function)
-* Symbols
-** +intern+
 * Generic Functions
 ** +=+
 * Vectors

@@ -1,5 +1,6 @@
 module Klam
   class Environment < BasicObject
+    include ::Klam::Primitives::Symbols
     include ::Klam::Primitives::Strings
     include ::Klam::Primitives::Assignments
     include ::Klam::Primitives::ErrorHandling
