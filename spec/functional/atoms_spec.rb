@@ -47,4 +47,10 @@ describe 'Atoms', :type => :functional do
       expect_kl('false').to eq(read_kl('false'))
     end
   end
+
+  describe 'empty list' do
+    it 'evaluates to itself' do
+      expect_kl('()').to be(Klam::Primitives::Lists::EMPTY_LIST)
+    end
+  end
 end
