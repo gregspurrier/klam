@@ -1,5 +1,6 @@
 module Klam
   class Environment < BasicObject
+    include ::Klam::Primitives::BooleanOperations
     include ::Klam::Primitives::Symbols
     include ::Klam::Primitives::Strings
     include ::Klam::Primitives::Assignments
