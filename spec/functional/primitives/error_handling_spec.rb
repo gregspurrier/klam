@@ -14,5 +14,9 @@ describe 'Error handling primitives', :type => :functional do
           .to eq('oops!')
       end
     end
+
+    it 'may be used as an argument to another function' do
+      expect_kl('(+ (trap-error 2 error-to-string) 3)').to eq(5)
+    end
   end
 end

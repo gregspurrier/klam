@@ -150,13 +150,8 @@ module Klam
         apply_handler_rb = emit_application([handler, err_var])
         err_var_rb = emit_ruby(err_var)
 
-        render_string(<<-EOT, err_var_rb, expr_rb, apply_handler_rb)
-          begin
-            $2
-          rescue => $1
-            $3
-          end
-        EOT
+        render_string('(begin; $2; rescue => $1; $3; end)', err_var_rb,
+                      expr_rb, apply_handler_rb)
       end
 
       # Escape single quotes and backslashes
