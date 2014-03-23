@@ -10,7 +10,7 @@ module Klam
       include Klam::Converters::List
 
       def kl_to_internal_representation(kl)
-        if cons?(kl)
+        if cons?(kl) || kl == Klam::Primitives::Lists::EMPTY_LIST
           listToArray(kl)
         else
           kl

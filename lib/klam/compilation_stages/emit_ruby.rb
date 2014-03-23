@@ -21,10 +21,12 @@ module Klam
           emit_string(sexp)
         when Klam::Variable, Numeric, true, false
           sexp.to_s
-        when Klam::Primitives::Lists::EMPTY_LIST
-          sexp.inspect
         when Array
-          emit_compound_form(sexp)
+          if sexp.empty?
+            Klam::Primitives::Lists::EMPTY_LIST.inspect
+          else
+            emit_compound_form(sexp)
+          end
         end
       end
 
