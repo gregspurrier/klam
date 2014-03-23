@@ -26,6 +26,11 @@ describe 'Generic function primitives', :type => :functional do
       eval_kl('(defun foo (A!B?-C) A!B?-C)')
       expect_kl('(foo 37)').to eq(37)
     end
+
+    it 'allows params to be empty' do
+      eval_kl('(defun foo () 37)')
+      expect_kl('(foo)').to eq(37)
+    end
   end
 
   describe '(lambda Var Expr)' do
