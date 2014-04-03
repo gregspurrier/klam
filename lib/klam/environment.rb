@@ -7,7 +7,9 @@ module Klam
     include ::Klam::Primitives::ErrorHandling
     include ::Klam::Primitives::Lists
     include ::Klam::Primitives::GenericFunctions
+    include ::Klam::Primitives::Vectors
     include ::Klam::Primitives::Streams
+    include ::Klam::Primitives::Time
     include ::Klam::Primitives::Arithmetic
 
     def initialize

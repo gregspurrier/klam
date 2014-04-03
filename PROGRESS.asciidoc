@@ -27,6 +27,10 @@ Language Features
 
 Primitives
 ~~~~~~~~~~
+As defined in
+http://www.shenlanguage.org/learn-shen/shendoc.htm#The%20Primitive%20Functions%20of%20K%20Lambda[The
+Primitive Functions of Kl]:
+
 * Boolean Operations
 ** +if+ (special form and normal function)
 ** +and+ (special form and normal function)
@@ -62,6 +66,18 @@ Primitives
 ** +eval-kl+
 ** +freeze+ (special form)
 ** +type+ (special form)
+* Vectors
+** +absvector+
+** +address\->+
+** +\<-address+
+** +absvector?+
+* Streams and I/O
+** +write-byte+
+** +read-byte+
+** +open+
+** +close+
+* Time
+** +get-time+
 * Arithmetic
 ** +++
 ** +-+
@@ -85,25 +101,6 @@ Language Features
 ~~~~~~~~~~~~~~~~~
 * Code Generation
 *** Inlining of simple primitives
-
-Primitives
-~~~~~~~~~~
-As defined in
-http://www.shenlanguage.org/learn-shen/shendoc.htm#The%20Primitive%20Functions%20of%20K%20Lambda[The
-Primitive Functions of Kl]:
-
-* Vectors
-** +absvector+
-** +address\->+
-** +\<-address+
-** +absvector?+
-* Streams and I/O
-** +write-byte+
-** +read-byte+
-** +open+
-** +close+
-* Time
-** +get-time+
 
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
