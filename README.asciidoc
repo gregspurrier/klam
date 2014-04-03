@@ -14,4 +14,4 @@ image:https://travis-ci.org/gregspurrier/klam.png?branch=master["Build Status", 
 
 License
 -------
-Klam is Copyright (c) 2014 Greg Spurrier. It is distributed under the terms of the MIT License. See link:LICENSE.txt[] for the details.
+Klam is Copyright (C) 2014 Greg Spurrier. It is distributed under the terms of the MIT License. See link:LICENSE.txt[] for the details.
