@@ -10,7 +10,7 @@ Klam is in its infancy. It does not yet support the complete set of language
 features and primitives specified in the
 http://www.shenlanguage.org/learn-shen/shendoc.htm[Official Shen Standard]. Please see link:PROGRESS.asciidoc[] for up-to-date information on the progress that has been made.
 
-image:https://travis-ci.org/gregspurrier/klam.svg?branch=master["Build Status", link="https://travis-ci.org/gregspurrier/klam"]
+image:https://travis-ci.org/gregspurrier/klam.png?branch=master["Build Status", link="https://travis-ci.org/gregspurrier/klam"]
 
 License
 -------
