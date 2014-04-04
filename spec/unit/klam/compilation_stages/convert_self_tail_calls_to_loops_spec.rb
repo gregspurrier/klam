@@ -20,4 +20,14 @@ describe Klam::CompilationStages::ConvertSelfTailCallsToLoops do
 
     expect(convert_self_tail_calls_to_loops(expr)).to eq(expected)
   end
+
+  it 'does not convert partial calls' do
+    expr = [:defun, :f, [:X, :Y],
+             [:f, :X]]
+    expected = [:defun, :f, [:X, :Y],
+                 [:"[LOOP]",
+                   [:f, :X]]]
+
+    expect(convert_self_tail_calls_to_loops(expr)).to eq(expected)
+  end
 end

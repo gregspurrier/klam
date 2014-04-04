@@ -82,7 +82,11 @@ module Klam
         if sexp.instance_of?(Array)
           case sexp[0]
           when name
-            [:"[RECUR]", params, fix_vars_if_necessary(sexp[1..-1], params)]
+            if sexp.length - 1 == params.length
+              [:"[RECUR]", params, fix_vars_if_necessary(sexp[1..-1], params)]
+            else
+              sexp
+            end
           when :if
             rator, test_expr, true_expr, false_expr = sexp
             [rator,
