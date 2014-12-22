@@ -10,9 +10,9 @@ module Klam
       end
 
       def absvec_store(vec, n, val)
-        raise ::Klam::Error, "#{vec} is not a vector" unless absvector?(vec)
+        ::Kernel.raise ::Klam::Error, "#{vec} is not a vector" unless absvector?(vec)
         if n < 0 || n >= (vec.length - 1)
-          raise ::Klam::Error, "index out of bounds: #{n}"
+          ::Kernel.raise ::Klam::Error, "index out of bounds: #{n}"
         end
         vec[n] = val
         vec
@@ -21,9 +21,9 @@ module Klam
       remove_method :absvec_store
 
       def absvec_read(vec, n)
-        raise ::Klam::Error, "#{vec} is not a vector" unless absvector?(vec)
+        ::Kernel.raise ::Klam::Error, "#{vec} is not a vector" unless absvector?(vec)
         if n < 0 || n >= (vec.length - 1)
-          raise ::Klam::Error, "index out of bounds: #{n}"
+          ::Kernel.raise ::Klam::Error, "index out of bounds: #{n}"
         end
         vec[n]
       end

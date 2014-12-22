@@ -3,14 +3,14 @@ module Klam
     module Strings
       def pos(str, n)
         if n < 0 || n >= str.length
-          raise ::Klam::Error, "index out of bounds: #{n}"
+          ::Kernel.raise ::Klam::Error, "index out of bounds: #{n}"
         end
         str[n]
       end
 
       def tlstr(str)
         if str.empty?
-          raise ::Klam::Error, 'attempted to take tail of empty string'
+          ::Kernel.raise ::Klam::Error, 'attempted to take tail of empty string'
         end
         str[1..-1]
       end
@@ -34,7 +34,7 @@ module Klam
         when IO
           x.to_s
         else
-          raise ::Klam::Error, "str applied to non-atomic type: #{x.class}"
+          ::Kernel.raise ::Klam::Error, "str applied to non-atomic type: #{x.class}"
         end
       end
 
