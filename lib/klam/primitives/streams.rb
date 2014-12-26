@@ -11,7 +11,7 @@ module Klam
       alias_method :"read-byte", :read_byte
       remove_method :read_byte
 
-      def write_byte(byte, stram)
+      def write_byte(byte, stream)
         stream.putc byte
         byte
       end
@@ -30,4 +30,3 @@ module Klam
     end
   end
 end
-
