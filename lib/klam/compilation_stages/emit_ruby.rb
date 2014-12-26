@@ -59,6 +59,8 @@ module Klam
           emit_hd(form)
         when :tl
           emit_tl(form)
+        when :"="
+          emit_equal(form)
         else
           emit_application(form)
         end
@@ -96,6 +98,16 @@ module Klam
         if form.size == 2
           list_rb = emit_ruby(form[1])
           render_string('$1.tl', list_rb)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_equal(form)
+        if form.size == 3
+          left_rb = emit_ruby(form[1])
+          right_rb = emit_ruby(form[2])
+          render_string('$1 == $2', left_rb, right_rb)
         else
           emit_application(form)
         end
