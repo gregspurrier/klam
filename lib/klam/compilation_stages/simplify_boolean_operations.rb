@@ -51,6 +51,8 @@ module Klam
           [:"simple-error", 'cond failure']
         else
           test, expr = clauses[0]
+          test = simplify_boolean_operations(test)
+          expr = simplify_boolean_operations(expr)
           [:if, test, expr, simplify_cond_clauses(clauses[1..-1])]
         end
       end
