@@ -51,6 +51,51 @@ module Klam
           emit_loop(form)
         when :"[RECUR]"
           emit_recur(form)
+        when :cons
+          emit_cons(form)
+        when :cons?
+          emit_consp(form)
+        when :hd
+          emit_hd(form)
+        when :tl
+          emit_tl(form)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_cons(form)
+        if form.size == 3
+          hd_rb = emit_ruby(form[1])
+          tl_rb = emit_ruby(form[2])
+          render_string('::Klam::Cons.new($1, $2)', hd_rb, tl_rb)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_consp(form)
+        if form.size == 2
+          list_rb = emit_ruby(form[1])
+          render_string('$1.instance_of?(::Klam::Cons)', list_rb)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_hd(form)
+        if form.size == 2
+          list_rb = emit_ruby(form[1])
+          render_string('$1.hd', list_rb)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_tl(form)
+        if form.size == 2
+          list_rb = emit_ruby(form[1])
+          render_string('$1.tl', list_rb)
         else
           emit_application(form)
         end
