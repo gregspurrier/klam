@@ -3,7 +3,7 @@ module Klam
     module Time
       def get_time(type)
         case type
-        when :real
+        when :real, :run
           ::Time.now.to_f
         when :unix
           ::Time.now.to_i
