@@ -53,7 +53,7 @@ describe 'Application', :type => :functional do
         expect_kl('((lambda X (+ X 3)) 2)').to eq(5)
       end
 
-      it 'uncurries addtional arguments' do
+      it 'uncurries additional arguments' do
         expect_kl('((lambda A (lambda B (lambda C (+ (+ A B) C)))) 1 2 3)')
           .to eq(6)
       end
@@ -63,6 +63,31 @@ describe 'Application', :type => :functional do
       it 'returns the result of applying the returned abstraction to its arg' do
         eval_kl('(defun make-adder (X) (lambda Y (+ X Y)))')
         expect_kl('((make-adder 3) 2)').to eq(5)
+      end
+    end
+  end
+
+  describe "of variables" do
+    describe "when bound to functions" do
+      describe 'when applied directly' do
+        it 'returns the result of applying the abstraction to its argument' do
+          expect_kl('(let F (lambda X (+ X 3)) (F 2))').to eq(5)
+        end
+
+        it 'uncurries additional arguments' do
+          expect_kl('(let F (lambda A (lambda B (lambda C (+ (+ A B) C)))) (F 1 2 3))')
+            .to eq(6)
+        end
+      end
+    end
+
+    describe "when bound to symbols" do
+      it 'invokes the function bound to the symobl in the global environment' do
+        expect_kl('(let F + (F 1 2))').to eq(3)
+      end
+
+      it 'supports partial evaluation' do
+        expect_kl('(let F + ((F 1) 2))').to eq(3)
       end
     end
   end

@@ -68,8 +68,7 @@ module Klam
           # simple send suffices.
           render_string('__send__($1)', [rator_rb] + rands_rb)
         else
-          # Application of an abstraction
-          render_string('$1.call($2)', rator_rb, rands_rb)
+          render_string('__apply($1)', [rator_rb] + rands_rb)
         end
       end
 

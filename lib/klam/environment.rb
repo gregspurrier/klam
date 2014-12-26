@@ -29,6 +29,41 @@ module Klam
       set(:"*home-directory*", ::Dir.pwd)
     end
 
+    def __apply(rator, *rands)
+      while rator
+        if rator.kind_of?(::Symbol)
+          arity = __arity(rator)
+          if arity == -1 || arity == rands.size
+            result = __send__(rator, *rands)
+            rator = nil
+          elsif arity < rands.size
+            rator = __send__(rator, *rands[0, arity])
+            rands = rands[arity..-1]
+          else
+            result = __method(rator).to_proc.curry.call(*rands)
+            rator = nil
+          end
+        else
+          arity = rator.arity
+          if arity == -1 || arity == rands.size
+            result = rator.call(*rands)
+            rator = nil
+          elsif arity < rands.size
+            rator = rator.call(*rands[0, arity])
+            rands = rands[arity..-1]
+          else
+            ::Kernel.puts "PARTIAL"
+            ::Kernel.exit(1)
+          end
+        end
+      end
+      result
+    end
+
+    def __method(sym)
+      @eigenclass.instance_method(sym).bind(self)
+    end
+
     def __arity(sym)
       @eigenclass.instance_method(sym).arity
     rescue ::NameError
