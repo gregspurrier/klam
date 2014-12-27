@@ -20,6 +20,8 @@ module Klam
         ::Kernel.raise ::Klam::Error, "The variable #{name} is unbound."
       end
 
+      @arities = ::Hash.new { |h, k| h[k] = __arity(k) }
+
       # Grab a handle to this object's eigenclass for use later when the
       # compiled code needs to reference it. It is used, e.g., when renaming
       # methods.
@@ -32,7 +34,7 @@ module Klam
     def __apply(rator, *rands)
       while rator
         if rator.kind_of?(::Symbol)
-          arity = __arity(rator)
+          arity = @arities[rator]
           if arity == -1 || arity == rands.size
             result = __send__(rator, *rands)
             rator = nil

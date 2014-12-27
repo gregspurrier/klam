@@ -164,11 +164,12 @@ module Klam
         # To maximize performance, methods are defined with def and then
         # renamed to their intended name afterwards.
         mangled_name = '__klam_fn_' + name.to_s.gsub(/[^a-zA-Z0-9]/, '_')
-        render_string(<<-EOT, name_rb, params_rb, body_rb, mangled_name)
+        render_string(<<-EOT, name_rb, params_rb, body_rb, mangled_name, params.size)
           def $4($2)
             $3
           end
           @eigenclass.rename_method(:$4, $1)
+          @arities[$1] = $5
           $1
         EOT
       end
