@@ -21,6 +21,7 @@ module Klam
       end
 
       @arities = ::Hash.new { |h, k| h[k] = __arity(k) }
+      @curried_methods = ::Hash.new { |h, k| h[k] = __method(k).to_proc.curry }
 
       # Grab a handle to this object's eigenclass for use later when the
       # compiled code needs to reference it. It is used, e.g., when renaming
@@ -42,7 +43,7 @@ module Klam
             rator = __send__(rator, *rands[0, arity])
             rands = rands[arity..-1]
           else
-            result = __method(rator).to_proc.curry.call(*rands)
+            result = @curried_methods[rator].call(*rands)
             rator = nil
           end
         else

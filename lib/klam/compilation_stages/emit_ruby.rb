@@ -170,6 +170,7 @@ module Klam
           end
           @eigenclass.rename_method(:$4, $1)
           @arities[$1] = $5
+          @curried_methods.delete($1)
           $1
         EOT
       end
