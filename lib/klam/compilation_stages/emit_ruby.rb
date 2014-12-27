@@ -61,6 +61,10 @@ module Klam
           emit_tl(form)
         when :"="
           emit_equal(form)
+        when :set
+          emit_set(form)
+        when :value
+          emit_value(form)
         else
           emit_application(form)
         end
@@ -108,6 +112,25 @@ module Klam
           left_rb = emit_ruby(form[1])
           right_rb = emit_ruby(form[2])
           render_string('$1 == $2', left_rb, right_rb)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_set(form)
+        if form.size == 3
+          name_rb = emit_ruby(form[1])
+          val_rb = emit_ruby(form[2])
+          render_string('@assignments[$1] = $2', name_rb, val_rb)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_value(form)
+        if form.size == 2
+          name_rb = emit_ruby(form[1])
+          render_string('@assignments[$1]', name_rb)
         else
           emit_application(form)
         end
