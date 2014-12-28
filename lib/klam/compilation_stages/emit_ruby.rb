@@ -22,11 +22,13 @@ module Klam
         :<= => [2, '($1 <= $2)'],
         :>= => [2, '($1 >= $2)'],
         :"=" => [2, '($1 == $2)'],
-        :absvector? => [1, '$1.instance_of?(::Klam::Absvector)'],
+        :absvector => [1, '::Array.new($1)'],
+        :absvector? => [1, '$1.instance_of?(::Array)'],
+        :"<-address" => [2, '$1[$2]'],
         :cons => [2, '::Klam::Cons.new($1, $2)'],
         :cons? => [1, '$1.instance_of?(::Klam::Cons)'],
         :hd => [1, '$1.hd'],
-        :set => [2, '@assignments[$1] = $2'],
+        :set => [2, '(@assignments[$1] = $2)'],
         :tl => [1, '$1.tl'],
         :value => [1, '@assignments[$1]']
       }
