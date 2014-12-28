@@ -1,17 +1,13 @@
 module Klam
   module Primitives
     module Vectors
-      ABSVEC_TAG = :"[ABSVEC]"
-
       def absvector(n)
-        vec = Array.new(n + 1)
-        vec[-1] = ABSVEC_TAG
-        vec
+        ::Klam::Absvector.new(n)
       end
 
       def absvec_store(vec, n, val)
         ::Kernel.raise ::Klam::Error, "#{vec} is not a vector" unless absvector?(vec)
-        if n < 0 || n >= (vec.length - 1)
+        if n < 0 || n >= vec.upper_limit
           ::Kernel.raise ::Klam::Error, "index out of bounds: #{n}"
         end
         vec[n] = val
@@ -22,7 +18,7 @@ module Klam
 
       def absvec_read(vec, n)
         ::Kernel.raise ::Klam::Error, "#{vec} is not a vector" unless absvector?(vec)
-        if n < 0 || n >= (vec.length - 1)
+        if n < 0 || n >= vec.upper_limit
           ::Kernel.raise ::Klam::Error, "index out of bounds: #{n}"
         end
         vec[n]
@@ -31,7 +27,7 @@ module Klam
       remove_method :absvec_read
 
       def absvector?(v)
-        v.instance_of?(Array) && v[-1] == ABSVEC_TAG
+        v.instance_of?(::Klam::Absvector)
       end
     end
   end

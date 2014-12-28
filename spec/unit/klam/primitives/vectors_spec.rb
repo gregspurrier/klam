@@ -6,8 +6,8 @@ describe Klam::Primitives::Vectors do
   describe '(absvector N)' do
     it 'returns an absvector of size N' do
       vec = absvector(3)
-      expect(absvector?(vec)).to be true
-      expect(vec.size).to be 4 # implementation detail
+      expect(vec).to be_kind_of Klam::Absvector
+      expect(vec.upper_limit).to eq(3)
     end
 
     it 'raises an error if N is negative' do

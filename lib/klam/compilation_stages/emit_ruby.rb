@@ -51,6 +51,8 @@ module Klam
           emit_loop(form)
         when :"[RECUR]"
           emit_recur(form)
+        when :absvector?
+          emit_absvectorp(form)
         when :cons
           emit_cons(form)
         when :cons?
@@ -65,6 +67,15 @@ module Klam
           emit_set(form)
         when :value
           emit_value(form)
+        else
+          emit_application(form)
+        end
+      end
+
+      def emit_absvectorp(form)
+        if form.size == 2
+          vec_rb = emit_ruby(form[1])
+          render_string('$1.instance_of?(::Klam::Absvector)', vec_rb)
         else
           emit_application(form)
         end
