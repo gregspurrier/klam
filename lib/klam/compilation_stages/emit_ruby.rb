@@ -13,6 +13,24 @@ module Klam
     module EmitRuby
       include Klam::Template
 
+      PRIMITIVE_TEMPLATES = {
+        :+ => [2, '($1 + $2)'],
+        :- => [2, '($1 - $2)'],
+        :* => [2, '($1 * $2)'],
+        :< => [2, '($1 < $2)'],
+        :> => [2, '($1 > $2)'],
+        :<= => [2, '($1 <= $2)'],
+        :>= => [2, '($1 >= $2)'],
+        :"=" => [2, '($1 == $2)'],
+        :absvector? => [1, '$1.instance_of?(::Klam::Absvector)'],
+        :cons => [2, '::Klam::Cons.new($1, $2)'],
+        :cons? => [1, '$1.instance_of?(::Klam::Cons)'],
+        :hd => [1, '$1.hd'],
+        :set => [2, '@assignments[$1] = $2'],
+        :tl => [1, '$1.tl'],
+        :value => [1, '@assignments[$1]']
+      }
+
       def emit_ruby(sexp)
         case sexp
         when Symbol
@@ -51,100 +69,24 @@ module Klam
           emit_loop(form)
         when :"[RECUR]"
           emit_recur(form)
-        when :absvector?
-          emit_absvectorp(form)
-        when :cons
-          emit_cons(form)
-        when :cons?
-          emit_consp(form)
-        when :hd
-          emit_hd(form)
-        when :tl
-          emit_tl(form)
-        when :"="
-          emit_equal(form)
-        when :set
-          emit_set(form)
-        when :value
-          emit_value(form)
         else
-          emit_application(form)
+          if full_primitive_form?(form)
+            emit_primitive(form)
+          else
+            emit_application(form)
+          end
         end
       end
 
-      def emit_absvectorp(form)
-        if form.size == 2
-          vec_rb = emit_ruby(form[1])
-          render_string('$1.instance_of?(::Klam::Absvector)', vec_rb)
-        else
-          emit_application(form)
-        end
+      def full_primitive_form?(form)
+        num_args, template = PRIMITIVE_TEMPLATES[form[0]]
+        num_args && (num_args == form.size - 1)
       end
 
-      def emit_cons(form)
-        if form.size == 3
-          hd_rb = emit_ruby(form[1])
-          tl_rb = emit_ruby(form[2])
-          render_string('::Klam::Cons.new($1, $2)', hd_rb, tl_rb)
-        else
-          emit_application(form)
-        end
-      end
-
-      def emit_consp(form)
-        if form.size == 2
-          list_rb = emit_ruby(form[1])
-          render_string('$1.instance_of?(::Klam::Cons)', list_rb)
-        else
-          emit_application(form)
-        end
-      end
-
-      def emit_hd(form)
-        if form.size == 2
-          list_rb = emit_ruby(form[1])
-          render_string('$1.hd', list_rb)
-        else
-          emit_application(form)
-        end
-      end
-
-      def emit_tl(form)
-        if form.size == 2
-          list_rb = emit_ruby(form[1])
-          render_string('$1.tl', list_rb)
-        else
-          emit_application(form)
-        end
-      end
-
-      def emit_equal(form)
-        if form.size == 3
-          left_rb = emit_ruby(form[1])
-          right_rb = emit_ruby(form[2])
-          render_string('$1 == $2', left_rb, right_rb)
-        else
-          emit_application(form)
-        end
-      end
-
-      def emit_set(form)
-        if form.size == 3
-          name_rb = emit_ruby(form[1])
-          val_rb = emit_ruby(form[2])
-          render_string('@assignments[$1] = $2', name_rb, val_rb)
-        else
-          emit_application(form)
-        end
-      end
-
-      def emit_value(form)
-        if form.size == 2
-          name_rb = emit_ruby(form[1])
-          render_string('@assignments[$1]', name_rb)
-        else
-          emit_application(form)
-        end
+      def emit_primitive(form)
+        _, template = PRIMITIVE_TEMPLATES[form[0]]
+        rands_rb = form[1..-1].map { |rand| emit_ruby(rand) }
+        render_string(template, *rands_rb)
       end
 
       def emit_application(form)
