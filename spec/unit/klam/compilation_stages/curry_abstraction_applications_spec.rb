@@ -8,4 +8,12 @@ describe Klam::CompilationStages::CurryAbstractionApplications do
 
     expect(curry_abstraction_applications(expr)).to eq(expected)
   end
+
+  it 'converts variable application to curried form' do
+    var = Klam::Variable.new('foo')
+    expr = [var, 1, 2, 3]
+    expected = [[[var, 1], 2], 3]
+
+    expect(curry_abstraction_applications(expr)).to eq(expected)
+  end
 end

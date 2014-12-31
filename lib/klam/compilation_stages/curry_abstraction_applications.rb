@@ -15,9 +15,12 @@ module Klam
     module CurryAbstractionApplications
       def curry_abstraction_applications(sexp)
         if sexp.instance_of?(Array)
-          if sexp[0].instance_of?(Array) && sexp.length > 2
+          if !sexp[0].instance_of?(Symbol) && sexp.length > 2
             [curry_abstraction_applications(sexp[0..-2]),
              curry_abstraction_applications(sexp[-1])]
+          elsif sexp[0] == :defun
+            sexp[0,3] +
+              sexp[3..-1].map { |form| curry_abstraction_applications(form) }
           else
             sexp.map { |form| curry_abstraction_applications(form) }
           end

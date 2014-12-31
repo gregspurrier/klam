@@ -33,34 +33,11 @@ module Klam
     end
 
     def __apply(rator, *rands)
-      while rator
-        if rator.kind_of?(::Symbol)
-          arity = @arities[rator]
-          if arity == -1 || arity == rands.size
-            result = __send__(rator, *rands)
-            rator = nil
-          elsif arity < rands.size
-            rator = __send__(rator, *rands[0, arity])
-            rands = rands[arity..-1]
-          else
-            result = @curried_methods[rator].call(*rands)
-            rator = nil
-          end
-        else
-          arity = rator.arity
-          if arity == -1 || arity == rands.size
-            result = rator.call(*rands)
-            rator = nil
-          elsif arity < rands.size
-            rator = rator.call(*rands[0, arity])
-            rands = rands[arity..-1]
-          else
-            ::Kernel.puts "PARTIAL"
-            ::Kernel.exit(1)
-          end
-        end
+      if rator.kind_of?(::Symbol)
+        @curried_methods[rator].call(*rands)
+      else
+        rator.call(*rands)
       end
-      result
     end
 
     def __method(sym)
