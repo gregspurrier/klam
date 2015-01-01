@@ -64,6 +64,8 @@ module Klam
               contains_self_tail_calls?(false_expr, name)
           when :let
             contains_self_tail_calls?(body[3], name)
+          when :do
+            contains_self_tail_calls?(body[2], name)
           else
             false
           end
@@ -99,6 +101,9 @@ module Klam
              var,
              val_expr,
              insert_recur_into_expr(body_expr, name, params)]
+          when :do
+            rator, first_expr, second_expr = sexp
+            [rator, first_expr, insert_recur_into_expr(second_expr, name, params)]
           else
             sexp
           end

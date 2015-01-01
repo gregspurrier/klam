@@ -65,6 +65,8 @@ module Klam
           emit_let(form)
         when :"trap-error"
           emit_trap_error(form)
+        when :do
+          emit_do(form)
         when :"[FIX-VARS]"
           emit_fix_vars(form)
         when :"[LOOP]"
@@ -128,6 +130,12 @@ module Klam
           @curried_methods.delete($1)
           $1
         EOT
+      end
+
+      def emit_do(form)
+        rands = form[1,2]
+        rands_rb = rands.map { |rand| emit_ruby(rand) }
+        '(' + rands_rb.join(';') + ')'
       end
 
       def emit_fix_vars(form)
