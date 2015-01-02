@@ -3,17 +3,17 @@ require 'spec_helper'
 describe 'Tail call optimization', :type => :functional do
   it 'optimizes self tail calls in an if true clause' do
     eval_kl('(defun count-down (X) (if (> X 0) (count-down (- X 1)) true))')
-    expect_kl('(count-down 10000)').to be(true)
+    expect_kl('(count-down 20000)').to be(true)
   end
 
   it 'optimizes self tail calls in an if false clause' do
     eval_kl('(defun count-down (X) (if (<= X 0) true (count-down (- X 1))))')
-    expect_kl('(count-down 10000)').to be(true)
+    expect_kl('(count-down 20000)').to be(true)
   end
 
   it 'optimizes self tail calls in a let body' do
     eval_kl('(defun count-down (X) (if (<= X 0) true (let F 1 (count-down (- X 1)))))')
-    expect_kl('(count-down 10000)').to be(true)
+    expect_kl('(count-down 20000)').to be(true)
   end
 
   it 'uses the current values of the params when calculating the new ones' do
@@ -44,5 +44,16 @@ describe 'Tail call optimization', :type => :functional do
           Thunk))
     EOKL
     expect_kl('((sample-frozen-val 2 foo))').to eq(1)
+  end
+
+  it 'supports functions with zero arguments' do
+    eval_kl('(set counter 0)')
+    eval_kl <<-EOKL
+      (defun count-down ()
+        (if (= 20000 (set counter (+ (value counter) 1)))
+          true
+          (count-down)))
+    EOKL
+    expect_kl('(count-down)').to be(true)
   end
 end

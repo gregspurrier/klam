@@ -177,10 +177,14 @@ module Klam
 
       def emit_recur(form)
         _, params, new_value_exprs = form
-        params_rb = params.map { |param| emit_ruby(param) }
-        new_value_exprs_rb = new_value_exprs.map { |expr| emit_ruby(expr) }
+        if params.size > 0
+          params_rb = params.map { |param| emit_ruby(param) }
+          new_value_exprs_rb = new_value_exprs.map { |expr| emit_ruby(expr) }
 
-        render_string('(($1 = $2); redo)', params_rb, new_value_exprs_rb)
+          render_string('(($1 = $2); redo)', params_rb, new_value_exprs_rb)
+        else
+          'redo'
+        end
       end
 
       def emit_string(str)
