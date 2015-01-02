@@ -26,11 +26,10 @@ module Klam
     # in the [RECUR] form so that they can be rebound before looping.
     #
     # Note that this rebinding of variables causes a wrinkle with respect to
-    # closures created as part of the recursive call. Those closures should
-    # close over the value at the point of recursion rather than the ultimate
-    # values after rebinding. To solve this, another sythetic primitive,
-    # [FIX-VARS], is used to wrap these cases and the emitted Ruby code
-    # samples those variables.
+    # closures created in the body. Those closures should close over the value
+    # at the point of closing rather than the ultimate values after rebinding.
+    # To solve this, another sythetic primitive, [FIX-VARS], is used to wrap
+    # these cases and the emitted Ruby code samples those variables.
     #
     # This compilation stage must come _after_ SimplifyBooleanOperations and
     # ConvertFreezesToLambdas.
@@ -42,7 +41,7 @@ module Klam
         if sexp.kind_of?(Array) && sexp[0] == :defun
           _, name, params, body = sexp
           if contains_self_tail_calls?(body, name)
-            insert_loop_and_recur_into_defun(sexp)
+            insert_loop_and_recur_into_defun(fix_vars(sexp, params))
           else
             sexp
           end
@@ -85,7 +84,7 @@ module Klam
           case sexp[0]
           when name
             if sexp.length - 1 == params.length
-              [:"[RECUR]", params, fix_vars_if_necessary(sexp[1..-1], params)]
+              [:"[RECUR]", params, sexp[1..-1]]
             else
               sexp
             end
@@ -112,27 +111,15 @@ module Klam
         end
       end
 
-      def fix_vars_if_necessary(sexps, params)
-        sexps.map do |sexp|
-          # This is a bit over-aggressive. It could be optimized to only
-          # protect in cases that params are free in the lambda expressions.
-          if contains_lambda?(sexp)
+      def fix_vars(sexp, params)
+        if sexp.kind_of?(Array)
+          if sexp[0] == :lambda
             [:"[FIX-VARS]", params, sexp]
           else
-            sexp
-          end
-        end
-      end
-
-      def contains_lambda?(sexp)
-        if sexp.instance_of?(Array)
-          if sexp[0] == :lambda
-            true
-          else
-            sexp.any? { |form| contains_lambda?(form) }
+            sexp.map { |x| fix_vars(x, params) }
           end
         else
-          false
+          sexp
         end
       end
     end

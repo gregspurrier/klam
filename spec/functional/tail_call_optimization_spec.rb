@@ -36,7 +36,7 @@ describe 'Tail call optimization', :type => :functional do
     expect_kl('((sample-loop-val 2 foo) ignored)').to eq(1)
   end
 
-  it 'preserves the value of frozen loop variables' do
+  it 'preserves the value of frozen loop variables in arguments' do
     eval_kl <<-EOKL
       (defun sample-frozen-val (N Thunk)
         (if (> N 0)
@@ -44,6 +44,21 @@ describe 'Tail call optimization', :type => :functional do
           Thunk))
     EOKL
     expect_kl('((sample-frozen-val 2 foo))').to eq(1)
+  end
+
+  it 'preserves the value of frozen loop variables not passed as args' do
+    eval_kl('(set foo (absvector 3))')
+    eval_kl <<-EOKL
+      (defun do-it (N)
+        (if (= N 3)
+          true
+          (let _ (address-> (value foo) N (freeze N))
+               (do-it (+ N 1)))))
+    EOKL
+    eval_kl('(do-it 0)')
+    expect_kl('((<-address (value foo) 0))').to eq(0)
+    expect_kl('((<-address (value foo) 1))').to eq(1)
+    expect_kl('((<-address (value foo) 2))').to eq(2)
   end
 
   it 'supports functions with zero arguments' do
@@ -56,4 +71,5 @@ describe 'Tail call optimization', :type => :functional do
     EOKL
     expect_kl('(count-down)').to be(true)
   end
+
 end
