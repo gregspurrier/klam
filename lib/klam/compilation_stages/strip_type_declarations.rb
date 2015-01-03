@@ -9,9 +9,6 @@ module Klam
     module StripTypeDeclarations
       def strip_type_declarations(sexp)
         if sexp.instance_of?(Array)
-          if sexp[0] == :defun && sexp[1] == :rev
-            puts sexp.inspect
-          end
           if sexp[0] == :type
             _, form, _ = sexp
             strip_type_declarations(form)
