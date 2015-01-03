@@ -114,12 +114,31 @@ module Klam
       def fix_vars(sexp, params)
         if sexp.kind_of?(Array)
           if sexp[0] == :lambda
-            [:"[FIX-VARS]", params, sexp]
+            referenced_vars = vars_referenced_in(sexp, params)
+            if referenced_vars.empty?
+              sexp
+            else
+              [:"[FIX-VARS]", referenced_vars, sexp]
+            end
           else
+            # Local variables must also be fixed
+            if sexp[0] == :let
+              params = params + [sexp[1]]
+            end
             sexp.map { |x| fix_vars(x, params) }
           end
         else
           sexp
+        end
+      end
+
+      def vars_referenced_in(sexp, vars)
+        if sexp.kind_of?(Array)
+          sexp.map { |x| vars_referenced_in(x, vars) }.flatten.uniq
+        elsif vars.include?(sexp)
+          [sexp]
+        else
+          []
         end
       end
     end

@@ -26,27 +26,7 @@ describe 'Tail call optimization', :type => :functional do
     expect_kl('(fact-iter 5 1)').to eq(120)
   end
 
-  it 'preserves the value of closed-over loop variables' do
-    eval_kl <<-EOKL
-      (defun sample-loop-val (N Closure)
-        (if (> N 0)
-          (sample-loop-val (- N 1) (lambda X N))
-          Closure))
-    EOKL
-    expect_kl('((sample-loop-val 2 foo) ignored)').to eq(1)
-  end
-
-  it 'preserves the value of frozen loop variables in arguments' do
-    eval_kl <<-EOKL
-      (defun sample-frozen-val (N Thunk)
-        (if (> N 0)
-          (sample-frozen-val (- N 1) (freeze N))
-          Thunk))
-    EOKL
-    expect_kl('((sample-frozen-val 2 foo))').to eq(1)
-  end
-
-  it 'preserves the value of frozen loop variables not passed as args' do
+  it 'preserves the value of closed-over function parameters' do
     eval_kl('(set foo (absvector 3))')
     eval_kl <<-EOKL
       (defun do-it (N)
@@ -54,6 +34,22 @@ describe 'Tail call optimization', :type => :functional do
           true
           (let _ (address-> (value foo) N (freeze N))
                (do-it (+ N 1)))))
+    EOKL
+    eval_kl('(do-it 0)')
+    expect_kl('((<-address (value foo) 0))').to eq(0)
+    expect_kl('((<-address (value foo) 1))').to eq(1)
+    expect_kl('((<-address (value foo) 2))').to eq(2)
+  end
+
+  it 'preserves the value of closed-over local variables' do
+    eval_kl('(set foo (absvector 3))')
+    eval_kl <<-EOKL
+      (defun do-it (N)
+        (if (= N 3)
+          true
+          (let X N
+               (let _ (address-> (value foo) N (freeze X))
+                    (do-it (+ N 1))))))
     EOKL
     eval_kl('(do-it 0)')
     expect_kl('((<-address (value foo) 0))').to eq(0)
