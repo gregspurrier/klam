@@ -75,7 +75,8 @@ module Klam
 
       def insert_loop_and_recur_into_defun(form)
         rator, name, params, body = form
-        body_with_loop = [:"[LOOP]", insert_recur_into_expr(body, name, params)]
+        body_with_loop = [:"[LOOP]", name, params,
+                          insert_recur_into_expr(body, name, params)]
         [rator, name, params, body_with_loop]
       end
 

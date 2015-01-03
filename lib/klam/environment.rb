@@ -22,6 +22,7 @@ module Klam
 
       @arities = ::Hash.new { |h, k| h[k] = __arity(k) }
       @curried_methods = ::Hash.new { |h, k| h[k] = __method(k).to_proc.curry }
+      @loop_cache = {}
 
       # Grab a handle to this object's eigenclass for use later when the
       # compiled code needs to reference it. It is used, e.g., when renaming

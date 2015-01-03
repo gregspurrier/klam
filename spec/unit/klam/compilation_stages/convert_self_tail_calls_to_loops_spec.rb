@@ -12,11 +12,11 @@ describe Klam::CompilationStages::ConvertSelfTailCallsToLoops do
                [:let, :Z, 37,
                  [:f, :Z, 99]]]]
     expected = [:defun, :f, [:X, :Y],
-                 [:"[LOOP]",
+                 [:"[LOOP]", :f, [:X, :Y],
                    [:if, true,
                      [:"[RECUR]", [:X, :Y], [7, 8]],
                      [:let, :Z, 37,
-                       [:"[RECUR]", [:X, :Y], [:Z, 99]]]]]]
+                      [:"[RECUR]", [:X, :Y], [:Z, 99]]]]]]
 
     expect(convert_self_tail_calls_to_loops(expr)).to eq(expected)
   end
@@ -25,7 +25,7 @@ describe Klam::CompilationStages::ConvertSelfTailCallsToLoops do
     expr = [:defun, :f, [:X, :Y],
              [:f, :X]]
     expected = [:defun, :f, [:X, :Y],
-                 [:"[LOOP]",
+                 [:"[LOOP]", :f, [:X, :Y],
                    [:f, :X]]]
 
     expect(convert_self_tail_calls_to_loops(expr)).to eq(expected)
