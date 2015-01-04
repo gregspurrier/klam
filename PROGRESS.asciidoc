@@ -97,11 +97,6 @@ Ruby Interoperation
 Not Yet Implemented
 -------------------
 
-Language Features
-~~~~~~~~~~~~~~~~~
-* Code Generation
-*** Inlining of simple primitives
-
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
 * Invoking Kl functions from Ruby

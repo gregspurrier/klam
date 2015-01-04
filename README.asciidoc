@@ -4,14 +4,8 @@ Klam
 Klam is a Ruby implementation of Kl, the small Lisp on top of which the
 http://www.shenlanguage.org[Shen] programming language is implemented.
 
-Status
-------
-Klam is in its infancy. It does not yet support the complete set of language
-features and primitives specified in the
-http://www.shenlanguage.org/learn-shen/shendoc.htm[Official Shen Standard]. Please see link:PROGRESS.asciidoc[] for up-to-date information on the progress that has been made.
-
 image:https://travis-ci.org/gregspurrier/klam.png?branch=master["Build Status", link="https://travis-ci.org/gregspurrier/klam"]
 
 License
 -------
-Klam is Copyright (C) 2014 Greg Spurrier. It is distributed under the terms of the MIT License. See link:LICENSE.txt[] for the details.
+Klam is Copyright (C) 2014-2015 Greg Spurrier. It is distributed under the terms of the MIT License. See link:LICENSE.txt[] for the details.
