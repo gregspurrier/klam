@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version     = '>= 1.9.3'
 
-  s.add_development_dependency 'rake', '~> 10.1', '>= 10.1.1'
-  s.add_development_dependency 'rspec', '~> 3.0', '>= 3.0.0.beta2'
-  s.add_development_dependency 'rspec-autotest', '~> 1.0', '>= 1.0.0.beta1'
-  s.add_development_dependency 'ZenTest', '~> 4.9', '>= 4.9.5'
+  s.add_development_dependency 'rake', '~> 10.4', '>= 10.4'
+  s.add_development_dependency 'rspec', '~> 3.1', '>= 3.1.0'
+  s.add_development_dependency 'rspec-autotest', '~> 1.0', '>= 1.0.0'
+  s.add_development_dependency 'ZenTest', '~> 4.11', '>= 4.11'
 
   git_files            = `git ls-files`.split("\n") rescue ''
   s.files              = git_files
