@@ -2,12 +2,11 @@ module Klam
   module Primitives
     module Vectors
       def absvector(n)
-        ::Array.new(n)
+        ::Klam::Absvector.new(n)
       end
 
       def absvec_store(vec, n, val)
-        vec[n] = val
-        vec
+        vec.store(n, val)
       end
       alias_method :"address->", :absvec_store
       remove_method :absvec_store
@@ -19,7 +18,7 @@ module Klam
       remove_method :absvec_read
 
       def absvector?(v)
-        v.instance_of?(::Array)
+        v.instance_of?(::Klam::Absvector)
       end
     end
   end

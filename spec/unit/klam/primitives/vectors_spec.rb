@@ -6,7 +6,7 @@ describe Klam::Primitives::Vectors do
   describe '(absvector N)' do
     it 'returns an absvector of size N' do
       vec = absvector(3)
-      expect(vec).to be_kind_of Array
+      expect(vec).to be_instance_of Klam::Absvector
       expect(vec.size).to eq(3)
     end
   end
@@ -24,6 +24,18 @@ describe Klam::Primitives::Vectors do
       send(:"address->", @vec, 1, :foo)
       expect(send(:"<-address", @vec, 1)).to eq(:foo)
     end
+
+    it 'raises an error if N is negative' do
+      expect {
+        send(:"address->", @vec, -1, :foo)
+      }.to raise_error
+    end
+
+    it 'raises an error if N is >= the size of the V' do
+      expect {
+        send(:"address->", @vec, 3, :foo)
+      }.to raise_error
+    end
   end
 
   describe '(<-address V N)' do
@@ -40,6 +52,18 @@ describe Klam::Primitives::Vectors do
       expect {
         send(:"<-address", @vec, 1)
       }.not_to raise_error
+    end
+
+    it 'raises an error if N is negative' do
+      expect {
+        send(:"<-address", @vec, -1)
+      }.to raise_error
+    end
+
+    it 'raises an error if N is >= the size of the V' do
+      expect {
+        send(:"<-address", @vec, 3)
+      }.to raise_error
     end
   end
 
