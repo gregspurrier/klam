@@ -91,6 +91,7 @@ Primitive Functions of Kl]:
 
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
+* Invoking Kl functions from Ruby
 * Ruby \<\-> Kl converters
 ** Array \<\-> List
 
@@ -99,7 +100,6 @@ Not Yet Implemented
 
 Ruby Interoperation
 ~~~~~~~~~~~~~~~~~~~
-* Invoking Kl functions from Ruby
 * Invoking Ruby functions from Kl
 * Ruby \<\-> Kl converters
 ** Array \<\-> Absvector
