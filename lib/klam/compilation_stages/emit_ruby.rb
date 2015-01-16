@@ -101,10 +101,19 @@ module Klam
         rands_rb = rands.map { |rand| emit_ruby(rand) }
 
         if rator.kind_of?(Symbol)
-          # Application of a function defined in the environment. At this point
-          # partial application and currying has been taken care of, so a
-          # simple send suffices.
-          render_string('__send__($1)', [rator_rb] + rands_rb)
+          rator_str = rator.to_s
+          if rator_str.start_with?('.')
+            # Ruby method invocation
+            method_name_rb = emit_ruby(rator_str[1..-1])
+            object_rb = rands_rb.shift
+            rands_rb.unshift(method_name_rb)
+            render_string('$1.send($2)', object_rb, rands_rb)
+          else
+            # Application of a function defined in the environment. At this
+            # point partial application and currying has been taken care of,
+            # so a simple send suffices.
+            render_string('__send__($1)', [rator_rb] + rands_rb)
+          end
         else
           render_string('__apply($1)', [rator_rb] + rands_rb)
         end
