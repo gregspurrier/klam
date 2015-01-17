@@ -206,7 +206,13 @@ module Klam
       end
 
       def emit_symbol(sym)
-        ':"' + sym.to_s + '"'
+        name = sym.to_s
+        if name =~ /^#[A-Z]/
+          # Ruby interop constant reference
+          name.gsub('#', '::')
+        else
+          ':"' + sym.to_s + '"'
+        end
       end
 
       def emit_trap_error(form)

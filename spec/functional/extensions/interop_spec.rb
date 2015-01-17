@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe 'extension: Ruby interop', :type => :functional do
+  describe 'constants' do
+    it 'evaluates scoped Ruby contants' do
+      expect_kl('#Math#PI').to eq(Math::PI)
+    end
+  end
+
   describe 'instance method invocation' do
     it 'invokes the method and returns the result' do
       expect_kl('(.reverse "abc")').to eq('cba')
@@ -25,6 +31,12 @@ describe 'extension: Ruby interop', :type => :functional do
     it 'supports objects bound to function parameters' do
       eval_kl('(defun ruby-reverse (X) (.reverse X))')
       expect_kl('(ruby-reverse "abc")').to eq('cba')
+    end
+  end
+
+  describe 'class method invocation' do
+    it 'works when class is in object position' do
+      expect_kl('(.sqrt #Math 4)').to eq(2)
     end
   end
 end
