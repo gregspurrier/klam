@@ -11,6 +11,7 @@ module Klam
     include ::Klam::Primitives::Streams
     include ::Klam::Primitives::Time
     include ::Klam::Primitives::Arithmetic
+    include ::Klam::Primitives::Interop
 
     def initialize
       # The global assignments namespace. Errors are thrown here in the

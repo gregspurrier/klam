@@ -101,19 +101,10 @@ module Klam
         rands_rb = rands.map { |rand| emit_ruby(rand) }
 
         if rator.kind_of?(Symbol)
-          rator_str = rator.to_s
-          if rator_str.start_with?('.')
-            # Ruby method invocation
-            method_name_rb = emit_ruby(rator_str[1..-1])
-            object_rb = rands_rb.shift
-            rands_rb.unshift(method_name_rb)
-            render_string('$1.send($2)', object_rb, rands_rb)
-          else
-            # Application of a function defined in the environment. At this
-            # point partial application and currying has been taken care of,
-            # so a simple send suffices.
-            render_string('__send__($1)', [rator_rb] + rands_rb)
-          end
+          # Application of a function defined in the environment. At this
+          # point partial application and currying have been taken care of,
+          # so a simple send suffices.
+          render_string('__send__($1)', [rator_rb] + rands_rb)
         else
           render_string('__apply($1)', [rator_rb] + rands_rb)
         end
@@ -206,13 +197,7 @@ module Klam
       end
 
       def emit_symbol(sym)
-        name = sym.to_s
-        if name =~ /^#[A-Z]/
-          # Ruby interop constant reference
-          name.gsub('#', '::')
-        else
-          ':"' + sym.to_s + '"'
-        end
+        ':"' + sym.to_s + '"'
       end
 
       def emit_trap_error(form)

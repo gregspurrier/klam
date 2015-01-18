@@ -8,6 +8,7 @@ module Klam
     # Klam::Environment instance.
 
     include Klam::CompilationStages::KlToInternalRepresentation
+    include Klam::CompilationStages::DesugarInteropForms
     include Klam::CompilationStages::StripTypeDeclarations
     include Klam::CompilationStages::MakeAbstractionsVariadic
     include Klam::CompilationStages::ConvertLexicalVariables
@@ -28,6 +29,7 @@ module Klam
       stages = [
         :kl_to_internal_representation,
         :strip_type_declarations,
+        :desugar_interop_forms,
         :make_abstractions_variadic,
         :convert_lexical_variables,
         :convert_freezes_to_lambdas,

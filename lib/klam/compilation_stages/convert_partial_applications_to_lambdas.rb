@@ -11,7 +11,7 @@ module Klam
             end
 
             rator_arity = arity(rator)
-            if rator_arity == -1 || rator_arity == rands.length
+            if rator_arity < 0 || rator_arity == rands.length
               converted_rands.unshift(rator)
             elsif rator_arity > rands.length
               # Partial application
