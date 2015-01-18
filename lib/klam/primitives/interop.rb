@@ -9,7 +9,7 @@ module Klam
       alias_method :"rb-send", :rb_send
       remove_method :rb_send
 
-      if RUBY_ENGINE == 'ruby' && RUBY_VERSION < '2'
+      if RUBY_VERSION < '2.'
         def rb_const(name)
           parts = name.to_s.split('::')
           parts.shift if parts.first.empty?
