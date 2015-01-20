@@ -34,6 +34,12 @@ describe 'extension: Ruby interop', :type => :functional do
       it 'passes arguments along to the method' do
         expect_kl('(.prepend "Klam!" "Hello, ")').to eq('Hello, Klam!')
       end
+
+      it 'supports -> and <- in place of []= and []' do
+        eval_kl('(set foo (#Array.new))')
+        eval_kl('(.-> (value foo) 0 37)')
+        expect_kl('(.<- (value foo) 0)').to eq(37)
+      end
     end
 
     describe 'class method invocation' do

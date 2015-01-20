@@ -10,7 +10,15 @@ module Klam
               name = sexp[0].to_s
               if name.start_with?('.')
                 # Instance method invocation
-                [:'rb-send', rands[0], name[1..-1].to_sym] + rands[1..-1]
+                msg = case name
+                      when ".->"
+                        :"[]="
+                      when ".<-"
+                        :"[]"
+                      else
+                        name[1..-1].to_sym
+                      end
+                [:'rb-send', rands[0], msg] + rands[1..-1]
               elsif name =~ /^(#[A-Z][^.]*)(\.[^.]+)/
                 # Class method invocation shorthand. Re-cast as normal method
                 # invocation on the class.
