@@ -25,6 +25,21 @@ module Klam
 
       alias_method :"rb-const", :rb_const
       remove_method :rb_const
+
+      def rb(mode)
+        case mode
+        when :+
+          @compiler.enable_ruby_interop_syntax!
+        when :-
+          @compiler.disable_ruby_interop_syntax!
+        else
+          ::Kernel.raise 'rb expects a + or -'
+        end
+      end
+
+      def rb?
+        @compiler.ruby_interop_syntax_enabled?
+      end
     end
   end
 end

@@ -8,8 +8,7 @@ module Klam
       remove_method :equal
 
       def eval_kl(form)
-        compiler = Klam::Compiler.new(self)
-        code = compiler.compile(form)
+        code = @compiler.compile(form)
         instance_eval code
       end
       alias_method :"eval-kl", :eval_kl

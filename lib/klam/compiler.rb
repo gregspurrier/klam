@@ -23,6 +23,7 @@ module Klam
     def initialize(environment)
       @environment = environment
       @generator = Klam::VariableGenerator.new
+      @ruby_interop_syntax_enabled = false
     end
 
     def compile(kl)
@@ -41,6 +42,18 @@ module Klam
         :emit_ruby
       ]
       apply_stages(stages, kl)
+    end
+
+    def enable_ruby_interop_syntax!
+      @ruby_interop_syntax_enabled = true
+    end
+
+    def disable_ruby_interop_syntax!
+      @ruby_interop_syntax_enabled = false
+    end
+
+    def ruby_interop_syntax_enabled?
+      @ruby_interop_syntax_enabled
     end
 
   private

@@ -30,6 +30,8 @@ module Klam
       # methods.
       @eigenclass = class << self; self; end
 
+      @compiler = ::Klam::Compiler.new(self)
+
       # The open primitive depends on having *home-directory* assigned.
       set(:"*home-directory*", ::Dir.pwd)
     end

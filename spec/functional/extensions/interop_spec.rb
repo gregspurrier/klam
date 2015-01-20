@@ -16,6 +16,10 @@ describe 'extension: Ruby interop', :type => :functional do
   end
 
   describe 'sugared forms' do
+    before(:each) do
+      eval_kl('(rb +)')
+    end
+
     describe 'constants' do
       it 'evaluates scoped Ruby contants' do
         expect_kl('#Math#PI').to eq(Math::PI)
