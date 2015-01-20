@@ -2,22 +2,22 @@ require 'spec_helper'
 
 describe 'extension: Ruby interop', :type => :functional do
   describe 'primitives' do
-    describe 'rb-send' do
+    describe 'ruby.send' do
       it 'invokes a method on a Ruby object, passing the provided args' do
-        expect_kl('(rb-send "def" prepend "abc")').to eq('abcdef')
+        expect_kl('(ruby.send "def" prepend "abc")').to eq('abcdef')
       end
     end
 
-    describe 'rb-const' do
+    describe 'ruby.const' do
       it 'looks up the named constant in the Ruby environment' do
-        expect_kl('(rb-const "::Math::PI")').to eq(Math::PI)
+        expect_kl('(ruby.const "::Math::PI")').to eq(Math::PI)
       end
     end
   end
 
   describe 'sugared forms' do
     before(:each) do
-      eval_kl('(rb +)')
+      eval_kl('(ruby.syntax +)')
     end
 
     describe 'constants' do

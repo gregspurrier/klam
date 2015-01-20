@@ -18,7 +18,7 @@ module Klam
                       else
                         name[1..-1].to_sym
                       end
-                [:'rb-send', rands[0], msg] + rands[1..-1]
+                [:'ruby.send', rands[0], msg] + rands[1..-1]
               elsif name =~ /^(#[A-Z][^.]*)(\.[^.]+)/
                 # Class method invocation shorthand. Re-cast as normal method
                 # invocation on the class.
@@ -33,7 +33,7 @@ module Klam
             name = sexp.to_s
             if name =~ /^#[A-Z]/
               # Constant reference
-              [:'rb-const', name.gsub('#', '::')]
+              [:'ruby.const', name.gsub('#', '::')]
             else
               sexp
             end
