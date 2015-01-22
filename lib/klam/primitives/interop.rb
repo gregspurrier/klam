@@ -3,14 +3,14 @@ module Klam
     # Primitives for interoperation with the host Ruby environment.
     # These are not official KLambda primitives.
     module Interop
-      def ruby_send(obj, method_name, *args)
+      def rb_send(obj, method_name, *args)
         obj.send(method_name, *args)
       end
-      alias_method :"ruby.send", :ruby_send
-      remove_method :ruby_send
+      alias_method :"rb-send", :rb_send
+      remove_method :rb_send
 
       if RUBY_VERSION < '2.'
-        def ruby_const(name)
+        def rb_const(name)
           parts = name.to_s.split('::')
           parts.shift if parts.first.empty?
           parts.reduce(::Module) do |m, x|
@@ -18,33 +18,13 @@ module Klam
           end
         end
       else
-        def ruby_const(name)
+        def rb_const(name)
           ::Module.const_get(name)
         end
       end
 
-      alias_method :"ruby.const", :ruby_const
-      remove_method :ruby_const
-
-      def ruby_syntax(mode)
-        case mode
-        when :+
-          @compiler.enable_ruby_interop_syntax!
-        when :-
-          @compiler.disable_ruby_interop_syntax!
-        else
-          ::Kernel.raise 'ruby.syntax expects a + or -'
-        end
-      end
-      alias_method :"ruby.syntax", :ruby_syntax
-      remove_method :ruby_syntax
-
-
-      def ruby_syntax?
-        @compiler.ruby_interop_syntax_enabled?
-      end
-      alias_method :"ruby.syntax?", :ruby_syntax?
-      remove_method :ruby_syntax?
+      alias_method :"rb-const", :rb_const
+      remove_method :rb_const
     end
   end
 end
