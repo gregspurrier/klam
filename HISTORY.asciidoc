@@ -1,0 +1,18 @@
+Relase History
+==============
+
+v0.0.3 -- January 28, 2015
+--------------------------
+New Features
+~~~~~~~~~~~~
+* Added `rb-const` and `rb-send` primitives
+
+v0.0.2 -- January 7, 2015
+-------------------------
+Bug Fixes
+~~~~~~~~~
+* Added bounds checking for absvectors
+
+v0.0.1 -- January 3, 2015
+-------------------------
+Initial Release
