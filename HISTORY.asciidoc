@@ -1,6 +1,13 @@
 Relase History
 ==============
 
+v0.0.4 -- Not Yet Released
+--------------------------
+New Features
+~~~~~~~~~~~~
+* `Klam::Cons` is now enumerable
+* Added `rb-send-block` primitive
+
 v0.0.3 -- January 28, 2015
 --------------------------
 New Features
