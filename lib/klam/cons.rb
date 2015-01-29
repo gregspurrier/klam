@@ -1,5 +1,6 @@
 module Klam
   class Cons
+    include Enumerable
     attr_reader :hd, :tl
 
     def initialize(hd, tl)
@@ -13,6 +14,14 @@ module Klam
 
     def hash
       [@hd, @tl].hash
+    end
+
+    def each
+      x = self
+      until x == Klam::Primitives::Lists::EMPTY_LIST
+        yield x.hd
+        x = x.tl
+      end
     end
   end
 end
