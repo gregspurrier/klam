@@ -1,7 +1,7 @@
 Relase History
 ==============
 
-v0.0.4 -- Not Yet Released
+v0.0.4 -- January 30, 2015
 --------------------------
 New Features
 ~~~~~~~~~~~~
