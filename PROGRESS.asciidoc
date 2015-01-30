@@ -94,14 +94,7 @@ Ruby Interoperation
 * Invoking Kl functions from Ruby
 * Invoking Ruby methods from Kl
 ** Without blocks
+** With blocks
 * Dereferencing Ruby constances from Kl
 * Ruby \<\-> Kl converters
 ** Array \<\-> List
-
-Not Yet Implemented
--------------------
-
-Ruby Interoperation
-~~~~~~~~~~~~~~~~~~~
-* Invoking Ruby methods from Kl
-** With blocks
