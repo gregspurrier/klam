@@ -1,6 +1,12 @@
 Relase History
 ==============
 
+v0.0.5 -- January 31, 2015
+--------------------------
+New Features
+~~~~~~~~~~~~
+* `Klam::Absvector` is now enumerable
+
 v0.0.4 -- January 30, 2015
 --------------------------
 New Features
