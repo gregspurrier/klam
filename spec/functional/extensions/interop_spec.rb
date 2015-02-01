@@ -9,7 +9,7 @@ describe 'extension: Ruby interop primitives', :type => :functional do
 
   describe 'rb-send-block' do
     it 'invokes a method on a Ruby object, passing the provided block' do
-      code = '(rb-send-block (cons 1 (cons 2 ())) map 1 (lambda X (* 2 X)))'
+      code = '(rb-send-block (cons 1 (cons 2 ())) map (lambda X (* 2 X)))'
       expect_kl(code).to eq([2, 4])
     end
 
@@ -17,7 +17,7 @@ describe 'extension: Ruby interop primitives', :type => :functional do
       eval_kl('(set vec (absvector 2))')
       result = eval_kl <<-EOKL
         (let V (absvector 2)
-          (do (rb-send-block (cons 1 (cons 2 ())) each_with_index 2
+          (do (rb-send-block (cons 1 (cons 2 ())) each_with_index
                              (lambda X (lambda Y (address-> V Y X))))
               V))
       EOKL
@@ -26,7 +26,7 @@ describe 'extension: Ruby interop primitives', :type => :functional do
 
     it 'supports symbols as blocks' do
       eval_kl('(set vec (absvector 2))')
-      expect_kl('(rb-send-block (cons 1 (cons 2())) map 1 str)').to eq(%w{1 2})
+      expect_kl('(rb-send-block (cons 1 (cons 2())) map str)').to eq(%w{1 2})
     end
   end
 

@@ -1,6 +1,12 @@
 Relase History
 ==============
 
+v0.0.6 -- February 1, 2015
+--------------------------
+Breaking Changes
+~~~~~~~~~~~~~~~~
+* `rb-send-block` no longer takes an arity argument.
+
 v0.0.5 -- January 31, 2015
 --------------------------
 New Features
