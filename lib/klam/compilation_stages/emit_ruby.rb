@@ -129,6 +129,7 @@ module Klam
           @eigenclass.rename_method(:$4, $1)
           @arities[$1] = $5
           @curried_methods.delete($1)
+          @loop_cache.delete($1)
           $1
         EOT
       end
@@ -172,28 +173,22 @@ module Klam
       end
 
       def emit_loop(form)
-        loop_var_rb = emit_ruby(form[1])
+        name_rb = emit_ruby(form[1])
+        params_rb = form[2].map {|v| emit_ruby(v)}
         expr_rb = emit_ruby(form[3])
-        result_var_rb = emit_ruby(fresh_variable)
-        render_string(<<-EOT, loop_var_rb, result_var_rb, expr_rb)
-          begin
-            $1 = false
-            $2 = $3
-          end while $1
-          $2
-        EOT
+        render_string('(@loop_cache[$1] ||= ::Kernel.lambda { |$2| $3 }).call($2)', name_rb,
+                      params_rb, expr_rb)
       end
 
       def emit_recur(form)
-        _, params, new_value_exprs, loop_var = form
+        _, params, new_value_exprs = form
         if params.size > 0
           params_rb = params.map { |param| emit_ruby(param) }
           new_value_exprs_rb = new_value_exprs.map { |expr| emit_ruby(expr) }
 
-          render_string('(($1 = $2); $3 = true)', params_rb, new_value_exprs_rb,
-                        loop_var)
+          render_string('(($1 = $2); redo)', params_rb, new_value_exprs_rb)
         else
-          '__recur = true'
+          'redo'
         end
       end
 
