@@ -193,7 +193,7 @@ module Klam
       end
 
       def emit_string(str)
-        "'" + escape_string(str) + "'"
+        str.inspect
       end
 
       def emit_symbol(sym)
@@ -210,23 +210,6 @@ module Klam
 
         render_string('(begin; $2; rescue => $1; $3; end)', err_var_rb,
                       expr_rb, apply_handler_rb)
-      end
-
-      # Escape single quotes and backslashes
-      def escape_string(str)
-        new_str = ""
-        str.each_char do |c|
-          if c == "'"
-            new_str << "\\"
-            new_str << "'"
-          elsif c == '\\'
-            new_str << '\\'
-            new_str << '\\'
-          else
-            new_str << c
-          end
-        end
-        new_str
       end
     end
   end
