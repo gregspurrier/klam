@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Klam::Primitives::ErrorHandling do
   include Klam::Primitives::ErrorHandling
 
+  def value(sym)
+    false
+  end
+
   describe '#simple-error' do
     it 'raises an error having the supplied message' do
       expect {
