@@ -10,7 +10,11 @@ module Klam
       # trap-error is a special form and implemented in the compiler
 
       def error_to_string(err)
-        err.message
+        if value(:"*include-backtrace-in-error-string*")
+          ([err.message] + err.backtrace).join("\n")
+        else
+          err.message
+        end
       end
       alias_method :"error-to-string", :error_to_string
       remove_method :error_to_string

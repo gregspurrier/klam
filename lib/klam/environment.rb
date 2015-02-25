@@ -34,6 +34,9 @@ module Klam
 
       # The open primitive depends on having *home-directory* assigned.
       set(:"*home-directory*", ::Dir.pwd)
+      set(:"*dump-kl*", false)
+      set(:"*dump-rb*", false)
+      set(:"*include-backtrace-in-error-string*", false)
     end
 
     def __apply(rator, *rands)

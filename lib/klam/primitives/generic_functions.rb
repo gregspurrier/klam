@@ -8,7 +8,9 @@ module Klam
       remove_method :equal
 
       def eval_kl(form)
+        ::Kernel.puts form.inspect if value(:"*dump-kl*")
         code = @compiler.compile(form)
+        ::Kernel.puts code if value(:"*dump-rb*")
         instance_eval code
       end
       alias_method :"eval-kl", :eval_kl
