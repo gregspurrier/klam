@@ -57,6 +57,11 @@ module Klam
     end
 
     class << self
+      # Define method is private, so open it up
+      def def_method(name, proc)
+        define_method(name, proc)
+      end
+
       def rename_method(old_name, new_name)
         alias_method(new_name, old_name)
         remove_method(old_name)

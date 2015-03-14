@@ -4,6 +4,8 @@ end
 require 'klam/version'
 require 'klam/error'
 require 'klam/template'
+require 'klam/constant'
+require 'klam/constant_generator'
 require 'klam/variable'
 require 'klam/variable_generator'
 require 'klam/absvector'

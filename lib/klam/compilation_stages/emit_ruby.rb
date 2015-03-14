@@ -40,7 +40,7 @@ module Klam
           emit_symbol(sexp)
         when String
           emit_string(sexp)
-        when Klam::Variable, Numeric, true, false
+        when Klam::Constant, Klam::Variable, Numeric, true, false
           sexp.to_s
         when Array
           if sexp.empty?
@@ -68,6 +68,8 @@ module Klam
           emit_trap_error(form)
         when :do
           emit_do(form)
+        when :"[DEFUN-CLOSURE]"
+          emit_defun_closure(form)
         when :"[FIX-VARS]"
           emit_fix_vars(form)
         when :"[LOOP]"
@@ -127,6 +129,28 @@ module Klam
             $3
           end
           @eigenclass.rename_method(:$4, $1)
+          @arities[$1] = $5
+          @curried_methods.delete($1)
+          $1
+        EOT
+      end
+
+      def emit_defun_closure(form)
+        _, name, params, body = form
+        name_rb = emit_ruby(name)
+        params_rb = params.map { |param| emit_ruby(param) }
+        body_rb = emit_ruby(body)
+
+        # Some valid Kl function names (e.g. foo-bar) are not valid when used
+        # with Ruby's def syntax. They will work with define_method, but the
+        # resulting methods are slower than if they had been defined via def.
+        # To maximize performance, methods are defined with def and then
+        # renamed to their intended name afterwards.
+        mangled_name = ('__klam_fn_' + name.to_s.gsub(/[^a-zA-Z0-9]/, '_')).intern
+        mangled_name_rb = emit_ruby(mangled_name)
+        render_string(<<-EOT, name_rb, params_rb, body_rb, mangled_name_rb, params.size)
+          @eigenclass.def_method($4, -> ($2) { $3 })
+          @eigenclass.rename_method($4, $1)
           @arities[$1] = $5
           @curried_methods.delete($1)
           $1

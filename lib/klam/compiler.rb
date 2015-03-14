@@ -16,12 +16,14 @@ module Klam
     include Klam::CompilationStages::ConvertPartialApplicationsToLambdas
     include Klam::CompilationStages::CurryAbstractionApplications
     include Klam::CompilationStages::MakeAbstractionsMonadic
+    include Klam::CompilationStages::ConstantizeConstructedConstants
     include Klam::CompilationStages::ConvertSelfTailCallsToLoops
     include Klam::CompilationStages::EmitRuby
 
     def initialize(environment)
       @environment = environment
-      @generator = Klam::VariableGenerator.new
+      @constant_generator = Klam::ConstantGenerator.new
+      @variable_generator = Klam::VariableGenerator.new
       @ruby_interop_syntax_enabled = false
     end
 
@@ -36,6 +38,7 @@ module Klam
         :convert_partial_applications_to_lambdas,
         :curry_abstraction_applications,
         :make_abstractions_monadic,
+        :constantize_constructed_constants,
         :convert_self_tail_calls_to_loops,
         :emit_ruby
       ]
@@ -66,11 +69,12 @@ module Klam
       @environment.__arity(sym)
     end
 
-    # Returns a new Klam::Variable object that is unique within this
-    # instance of the compiler. Variables are never used in a global
-    # context in Kl, so this is sufficient to avoid collisions.
+    def fresh_constant
+      @constant_generator.next
+    end
+
     def fresh_variable
-      @generator.next
+      @variable_generator.next
     end
   end
 end

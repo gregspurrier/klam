@@ -1,12 +1,12 @@
 module Klam
-  class VariableGenerator
+  class ConstantGenerator
     def initialize
       @index = 0
     end
 
     def next
       @index += 1
-      Klam::Variable.new('__KLAMV_%03d' % @index)
+      Klam::Constant.new('__KLAMC_%03d' % @index)
     end
   end
 end
