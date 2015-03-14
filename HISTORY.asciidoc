@@ -1,6 +1,12 @@
 Relase History
 ==============
 
+Not Yet Released
+----------------
+Performance Improvements
+~~~~~~~~~~~~~~~~~~~~~~~~
+* Self tail calls are now implemented with while loops rather than lambda/redo.
+
 v0.0.7 -- February 24, 2015
 ---------------------------
 New Features

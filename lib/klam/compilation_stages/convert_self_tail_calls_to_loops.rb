@@ -75,17 +75,19 @@ module Klam
 
       def insert_loop_and_recur_into_defun(form)
         rator, name, params, body = form
-        body_with_loop = [:"[LOOP]", name, params,
-                          insert_recur_into_expr(body, name, params)]
+        loop_var = fresh_variable
+        body_with_loop = [:"[LOOP]", loop_var,
+                          insert_recur_into_expr(body, name, params,
+                                                 loop_var)]
         [rator, name, params, body_with_loop]
       end
 
-      def insert_recur_into_expr(sexp, name, params)
+      def insert_recur_into_expr(sexp, name, params, loop_var)
         if sexp.instance_of?(Array)
           case sexp[0]
           when name
             if sexp.length - 1 == params.length
-              [:"[RECUR]", params, sexp[1..-1]]
+              [:"[RECUR]", params, sexp[1..-1], loop_var]
             else
               sexp
             end
@@ -93,17 +95,18 @@ module Klam
             rator, test_expr, true_expr, false_expr = sexp
             [rator,
              test_expr,
-             insert_recur_into_expr(true_expr, name, params),
-             insert_recur_into_expr(false_expr, name, params)]
+             insert_recur_into_expr(true_expr, name, params, loop_var),
+             insert_recur_into_expr(false_expr, name, params, loop_var)]
           when :let
             rator, var, val_expr, body_expr = sexp
             [rator,
              var,
              val_expr,
-             insert_recur_into_expr(body_expr, name, params)]
+             insert_recur_into_expr(body_expr, name, params, loop_var)]
           when :do
             rator, first_expr, second_expr = sexp
-            [rator, first_expr, insert_recur_into_expr(second_expr, name, params)]
+            [rator, first_expr, insert_recur_into_expr(second_expr, name,
+                                                       params, loop_var)]
           else
             sexp
           end
