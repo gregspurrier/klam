@@ -1,21 +1,24 @@
 module Klam
-  class Absvector < Array
-    def [](i)
-      if i < 0 || i >= size
-        raise Klam::Error, "index out of bounds: #{i}"
-      end
-      super(i)
+  class Absvector
+    attr_reader :size, :array
+
+    def initialize(n, fill = nil)
+      @size = n
+      @array = Array.new(n, fill)
     end
 
-    def []=(i, x)
-      if i < 0 || i >= size
+    def [](i)
+      if i < 0 || i >= @size
         raise Klam::Error, "index out of bounds: #{i}"
       end
-      super(i, x)
+      @array[i]
     end
 
     def store(i, x)
-      self[i] = x
+      if i < 0 || i >= @size
+        raise Klam::Error, "index out of bounds: #{i}"
+      end
+      @array[i] = x
       self
     end
 
@@ -27,9 +30,16 @@ module Klam
     end
 
     def to_a
-      a = super
-      a.shift
-      a
+      @array[1..-1]
+    end
+
+    def ==(other)
+      other.kind_of?(Klam::Absvector) && other.size == @size &&
+        other.array == @array
+    end
+
+    def hash
+      @array.hash
     end
   end
 end

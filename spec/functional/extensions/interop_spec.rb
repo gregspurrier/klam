@@ -17,11 +17,14 @@ describe 'extension: Ruby interop primitives', :type => :functional do
       eval_kl('(set vec (absvector 2))')
       result = eval_kl <<-EOKL
         (let V (absvector 2)
-          (do (rb-send-block (cons 1 (cons 2 ())) each_with_index
+          (do (rb-send-block (cons 37 (cons 42 ())) each_with_index
                              (lambda X (lambda Y (address-> V Y X))))
               V))
       EOKL
-      expect(result).to eq([1, 2])
+      expected = Klam::Absvector.new(2)
+      expected.store(0, 37)
+      expected.store(1, 42)
+      expect(result).to eq(expected)
     end
 
     it 'supports symbols as blocks' do
