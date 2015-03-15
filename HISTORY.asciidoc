@@ -1,11 +1,14 @@
 Relase History
 ==============
 
-Not Yet Released
-----------------
+v0.0.8 -- March 15, 2015
+------------------------
 Performance Improvements
 ~~~~~~~~~~~~~~~~~~~~~~~~
 * Self tail calls are now implemented with while loops rather than lambda/redo.
+* Lists containing only constants are created once and cached.
+* `Klam::Absvector` contains an `Array` instance rather than inheriting from
+  `Array`
 
 v0.0.7 -- February 24, 2015
 ---------------------------
