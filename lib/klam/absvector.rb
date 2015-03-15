@@ -1,10 +1,19 @@
 module Klam
   class Absvector
+    include Enumerable
     attr_reader :size, :array
 
-    def initialize(n, fill = nil)
-      @size = n
-      @array = Array.new(n, fill)
+    def initialize(n_or_array, fill = nil)
+      if n_or_array.kind_of?(Array)
+        # This is a convenience constructor for making Shen vectors from Ruby
+        # Arrays. Shen vectors use 1-based indexing and store the size in
+        # slot zero.
+        @array = Array.new(n_or_array)
+        @array.unshift(@array.size)
+      else
+        @array = Array.new(n_or_array, fill)
+      end
+        @size = @array.size
     end
 
     def [](i)
