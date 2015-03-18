@@ -149,7 +149,7 @@ module Klam
         mangled_name = ('__klam_fn_' + name.to_s.gsub(/[^a-zA-Z0-9]/, '_')).intern
         mangled_name_rb = emit_ruby(mangled_name)
         render_string(<<-EOT, name_rb, params_rb, body_rb, mangled_name_rb, params.size)
-          @eigenclass.def_method($4, -> ($2) { $3 })
+          @eigenclass.def_method($4, ::Kernel.lambda { |$2| $3 })
           @eigenclass.rename_method($4, $1)
           @arities[$1] = $5
           @curried_methods.delete($1)
