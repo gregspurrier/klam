@@ -28,13 +28,13 @@ describe Klam::Primitives::Vectors do
     it 'raises an error if N is negative' do
       expect {
         send(:"address->", @vec, -1, :foo)
-      }.to raise_error
+      }.to raise_error(::Klam::Error)
     end
 
     it 'raises an error if N is >= the size of the V' do
       expect {
         send(:"address->", @vec, 3, :foo)
-      }.to raise_error
+      }.to raise_error(::Klam::Error)
     end
   end
 
@@ -57,13 +57,13 @@ describe Klam::Primitives::Vectors do
     it 'raises an error if N is negative' do
       expect {
         send(:"<-address", @vec, -1)
-      }.to raise_error
+      }.to raise_error(::Klam::Error)
     end
 
     it 'raises an error if N is >= the size of the V' do
       expect {
         send(:"<-address", @vec, 3)
-      }.to raise_error
+      }.to raise_error(::Klam::Error)
     end
   end
 

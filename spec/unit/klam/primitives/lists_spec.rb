@@ -22,7 +22,7 @@ describe Klam::Primitives::Lists do
     end
 
     it 'raises an exception when applied to the empty list' do
-      expect { hd(@empty_list) }.to raise_error
+      expect { hd(@empty_list) }.to raise_error(NoMethodError)
     end
   end
 
@@ -32,7 +32,7 @@ describe Klam::Primitives::Lists do
     end
 
     it 'raises an exception when applied to the empty list' do
-      expect { tl(@empty_list) }.to raise_error
+      expect { tl(@empty_list) }.to raise_error(NoMethodError)
     end
   end
 
