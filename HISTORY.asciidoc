@@ -1,9 +1,17 @@
 Relase History
 ==============
 
+Unreleased
+----------
+Compatibility Updates
+~~~~~~~~~~~~~~~~~~~~~
+* Use Integer rather than Fixnum.
+* Quiet rspec warnings w.r.t. specs for raised exceptions.
+
 v0.0.9 -- March 17, 2015
 ------------------------
 Bug Fixes
+~~~~~~~~~
 * Fixed compatibility issue with Ruby 1.9.3.
 
 v0.0.8 -- March 15, 2015
