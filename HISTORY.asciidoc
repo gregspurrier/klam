@@ -1,8 +1,12 @@
 Relase History
 ==============
 
+v0.1.1 -- May 16, 2019
+----------------------
+* Re-release
+
 v0.1.0 -- May 16, 2019
-----------
+----------------------
 New Features
 ~~~~~~~~~~~~
 * Allow comma in symbols. This is required to support Shen 21.0 and above.
