@@ -2,7 +2,7 @@ require 'singleton'
 
 module Klam
   class Lexer
-    SYMBOL_CHARS = /[-=*\/+_?$!\@~><&%'#`;:{}a-zA-Z0-9.]/
+    SYMBOL_CHARS = /[-=*\/+_?$!\@~><&%'#`;:{}a-zA-Z0-9.,]/
 
     # Syntax tokens
     class OpenParen
