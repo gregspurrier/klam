@@ -1,6 +1,11 @@
 Relase History
 ==============
 
+v0.0.9 -- March 17, 2015
+------------------------
+Bug Fixes
+* Fixed compatibility issue with Ruby 1.9.3.
+
 v0.0.8 -- March 15, 2015
 ------------------------
 Performance Improvements
