@@ -1,7 +1,7 @@
 Relase History
 ==============
 
-Unreleased
+v0.1.0 -- May 16, 2019
 ----------
 New Features
 ~~~~~~~~~~~~
