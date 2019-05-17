@@ -9,7 +9,7 @@ describe Klam::Primitives::Arithmetic do
     end
 
     it 'returns an integer when both arguments are integers' do
-      expect(send(:+, 1, 2)).to be_kind_of(Fixnum)
+      expect(send(:+, 1, 2)).to be_kind_of(Integer)
     end
 
     it 'returns a real when either arguments are reals' do
@@ -28,7 +28,7 @@ describe Klam::Primitives::Arithmetic do
     end
 
     it 'returns an integer when both arguments are integers' do
-      expect(send(:-, 1, 2)).to be_kind_of(Fixnum)
+      expect(send(:-, 1, 2)).to be_kind_of(Integer)
     end
 
     it 'returns a real when either arguments are reals' do
@@ -47,7 +47,7 @@ describe Klam::Primitives::Arithmetic do
     end
 
     it 'returns an integer when both arguments are integers' do
-      expect(send(:*, 1, 2)).to be_kind_of(Fixnum)
+      expect(send(:*, 1, 2)).to be_kind_of(Integer)
     end
 
     it 'returns a real when either arguments are reals' do
@@ -66,7 +66,7 @@ describe Klam::Primitives::Arithmetic do
     end
 
     it 'returns an integer when both arguments are integers and there is no remainder' do
-      expect(send(:/, 6, 2)).to be_kind_of(Fixnum)
+      expect(send(:/, 6, 2)).to be_kind_of(Integer)
     end
 
     it 'returns a real otherwise' do

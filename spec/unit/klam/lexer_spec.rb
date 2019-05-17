@@ -47,9 +47,9 @@ describe Klam::Lexer do
   end
 
   describe 'numbers' do
-    it 'reads integers as Fixnums' do
+    it 'reads integers as Integers' do
       num = lexer("37").next
-      expect(num).to be_kind_of(Fixnum)
+      expect(num).to be_kind_of(Integer)
       expect(num).to eq(37)
     end
 
@@ -84,7 +84,7 @@ describe Klam::Lexer do
     it 'treats a trailing decimal followed by EOF as a symbol' do
       l = lexer('7.')
       num = l.next
-      expect(num).to be_kind_of(Fixnum)
+      expect(num).to be_kind_of(Integer)
       expect(num).to eq(7)
 
       sym = l.next
@@ -95,7 +95,7 @@ describe Klam::Lexer do
     it 'treats a trailing decimal followed by non-digit as a symbol' do
       l = lexer('7.a')
       num = l.next
-      expect(num).to be_kind_of(Fixnum)
+      expect(num).to be_kind_of(Integer)
       expect(num).to eq(7)
 
       sym = l.next
