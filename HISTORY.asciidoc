@@ -3,6 +3,10 @@ Relase History
 
 Unreleased
 ----------
+New Features
+~~~~~~~~~~~~
+* Allow comma in symbols. This is required to support Shen 21.0 and above.
+
 Compatibility Updates
 ~~~~~~~~~~~~~~~~~~~~~
 * Use Integer rather than Fixnum.
